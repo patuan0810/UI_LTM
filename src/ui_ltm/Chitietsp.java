@@ -13,6 +13,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import static ui_ltm.chart.createChart;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -24,10 +25,16 @@ private ChartPanel chartPanel;
     
   public Chitietsp() {
     initComponents();
+    
+    // Tạo biểu đồ
     JFreeChart chart = createChart();
-    chartPanel = new ChartPanel(chart);
-    jPanel4.add(chartPanel);
-    jPanel4.setVisible(true); // Đảm bảo rằng jPanel4 hoặc Chitietsp đã được hiển thị
+
+    // Tạo một ChartPanel để hiển thị biểu đồ
+    ChartPanel chartPanel = new ChartPanel(chart);
+
+    // Thêm ChartPanel vào jPanel4
+    jPanel4.setLayout(new BorderLayout());
+    jPanel4.add(chartPanel, BorderLayout.CENTER);
 }
 
 
@@ -164,7 +171,7 @@ private ChartPanel chartPanel;
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(418, 418, 418)
+                .addGap(442, 442, 442)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

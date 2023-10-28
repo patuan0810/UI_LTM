@@ -23,7 +23,7 @@ public class chart extends javax.swing.JFrame {
  
     public static JFreeChart createChart() {
         JFreeChart barChart = ChartFactory.createBarChart(
-                "BIỂU ĐỒ biến động giá của sản phẩm",
+                "BIỂU ĐỒ BIẾN ĐỘNG GIÁ CỦA SẢN PHẨM",
                 "Tháng", "Giá",
                 createDataset(), PlotOrientation.VERTICAL, false, false, false);
         return barChart;
@@ -31,18 +31,18 @@ public class chart extends javax.swing.JFrame {
 
     private static CategoryDataset createDataset() {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(1000000, "", "Tháng 1/2023");
-        dataset.addValue(850000, "", "Tháng 2/2023");
-        dataset.addValue(1000000, "", "Tháng 3/2023");
-        dataset.addValue(1000000, "", "Tháng 4/2023");
-        dataset.addValue(1000000, "", "Tháng 5/2023");
-        dataset.addValue(1000000, "", "Tháng 6/2023");
-        dataset.addValue(1000000, "", "Tháng 7/2023");
-        dataset.addValue(1000000, "", "Tháng 8/2023");
-        dataset.addValue(1000000, "", "Tháng 9/2023");
-        dataset.addValue(1000000, "", "Tháng 10/2023");
-        dataset.addValue(1000000, "", "Tháng 11/2023");
-        dataset.addValue(1000000, "", "Tháng 12/2023");
+        dataset.addValue(100000, "", "1/2023");
+        dataset.addValue(850000, "", "2/2023");
+        dataset.addValue(200000, "", "3/2023");
+        dataset.addValue(300000, "", "4/2023");
+        dataset.addValue(400000, "", "5/2023");
+        dataset.addValue(500000, "", "6/2023");
+        dataset.addValue(600000, "", "7/2023");
+        dataset.addValue(700000, "", "8/2023");
+        dataset.addValue(800000, "", "9/2023");
+        dataset.addValue(900000, "", "10/2023");
+        dataset.addValue(1000000, "", "11/2023");
+        dataset.addValue(1000000, "", "12/2023");
         return dataset;
     }
     // </editor-fold>
