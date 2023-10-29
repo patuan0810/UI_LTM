@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/Hoc%20tap/Mang%20may%20tinh/UI_LTM/src/ui_ltm/TikiTrackPriceClient.java</file>
             <file>file:/D:/Hoc%20tap/Mang%20may%20tinh/UI_LTM/src/ui_ltm/Home.java</file>
             <file>file:/D:/Hoc%20tap/Mang%20may%20tinh/UI_LTM/src/ui_ltm/UI_LTM.java</file>
+=======
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/UI_LTM/src/ui_ltm/Home.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/UI_LTM/src/ui_ltm/Chitietsp.java</file>
+>>>>>>> 76174e41c22857616662a92df8fa69014449c94b
         </group>
     </open-files>
 </project-private>
