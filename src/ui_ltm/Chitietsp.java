@@ -134,7 +134,7 @@ private ChartPanel chartPanel;
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("Tên sản phẩm:  GIÀY NAM SNAKER THỜI \nTRANG MẪU MỚI TIZINIS\n\nGiá: 2.000.000 VNĐ");
+        jTextArea1.setText("Tên sản phẩm:  GIÀY NAM SNAKER THỜI \nTRANG MẪU MỚI TIZINIS\n\nGiá hiện tại: 2.000.000 VNĐ");
         jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
