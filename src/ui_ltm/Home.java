@@ -369,17 +369,15 @@ public class Home extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "STT", "Tên Sản Phẩm", "Giá hiện tại"
+                "STT", "Tên Sản Phẩm"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -463,9 +461,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void nhasachtikiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nhasachtikiMouseClicked
-  
-        TikiTrackPriceClient.sendData("hehe");
-      
+
+        TikiTrackPriceClient.sendData("GetListProduct", "nha-sach-tiki");
     }//GEN-LAST:event_nhasachtikiMouseClicked
 
     /**

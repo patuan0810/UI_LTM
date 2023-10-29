@@ -4,6 +4,7 @@
  */
 package ui_ltm;
 
+import com.orsoncharts.util.json.JSONObject;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -33,21 +34,21 @@ public class TikiTrackPriceClient {
         
     }
     
-    private static void sendDataPrivate(String dataSend) {
+    public static void sendData(String request, String data) {
 
         try {
-            byte[] data = dataSend.getBytes();
-            dpSend = new DatagramPacket(data, data.length, inetAdd,destPort);
-            System.out.println("Client sent " + dataSend + " to " + inetAdd.getHostAddress() + " from port " + socket.getLocalPort());
+            JSONObject jsDataSend = new JSONObject();
+            jsDataSend.put("request", request);
+            jsDataSend.put("data", data);
+            byte[] dataSend = jsDataSend.toString().getBytes();
+            dpSend = new DatagramPacket(dataSend, dataSend.length, inetAdd, destPort);
             socket.send(dpSend);
         } catch (IOException e) {
            e.printStackTrace();
         }
     }
+   
     
-    public static void sendData(String dataSend) {
-        sendDataPrivate(dataSend);
-    }
     
 //    private String receiveData() {
 //        
