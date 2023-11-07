@@ -4,28 +4,32 @@
  */
 package ui_ltm;
 
-import com.orsoncharts.util.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 
 public class TikiTrackPriceClient {
-    private static int destPort = 4444;
     
-    private static DatagramSocket socket;
-    private static DatagramPacket dpSend, dpReceive;
-    private static InetAddress inetAdd;
+    private static Socket socket;
+    private static BufferedReader in;
+    private static BufferedWriter  out;
     
-    public TikiTrackPriceClient(String hostname) {
+    public TikiTrackPriceClient(String host, int port) {
         
         try {
-            inetAdd = InetAddress.getByName(hostname);
-            socket = new DatagramSocket();
+            socket = new Socket(host, port);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            System.out.println("Client đã kết nối đến server " + socket.getRemoteSocketAddress());
             System.out.println("Khởi tạo Client thành công.");
         } catch(IOException e){
             System.out.println("Khởi tạo Client thất bại.");
@@ -34,23 +38,20 @@ public class TikiTrackPriceClient {
         
     }
     
-    public static void sendData(String request, String data) {
-
+    public static String handleListProduct(String request, String data) {
         try {
             JSONObject jsDataSend = new JSONObject();
             jsDataSend.put("request", request);
             jsDataSend.put("data", data);
-            byte[] dataSend = jsDataSend.toString().getBytes();
-            dpSend = new DatagramPacket(dataSend, dataSend.length, inetAdd, destPort);
-            socket.send(dpSend);
+            out.write(jsDataSend.toString() + "\n");
+            out.flush();
+            String dataReceive = in.readLine();
+            return dataReceive;
         } catch (IOException e) {
-           e.printStackTrace();
+            e.printStackTrace();
+            return "Đã có lỗi nhận dữ liệu!";
+          
         }
     }
-   
-    
-    
-//    private String receiveData() {
-//        
-//    }
+
 }
