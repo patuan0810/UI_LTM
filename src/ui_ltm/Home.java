@@ -63,8 +63,6 @@ public class Home extends javax.swing.JFrame {
         listSanPham = new javax.swing.JTabbedPane();
         nhaSachTikiScrollPane = new javax.swing.JScrollPane();
         nhaSachTikiTable = new javax.swing.JTable();
-        nhaCuaDoiSongScrollPane = new javax.swing.JScrollPane();
-        nhaCuaDoiSongTable = new javax.swing.JTable();
         mayAnhScrollPane = new javax.swing.JScrollPane();
         mayAnhTable = new javax.swing.JTable();
         laptopMayViTinhLinhKienScrollPane = new javax.swing.JScrollPane();
@@ -77,6 +75,8 @@ public class Home extends javax.swing.JFrame {
         tuiThoiTrangNamTable = new javax.swing.JTable();
         giayDepNamScrollPane = new javax.swing.JScrollPane();
         giayDepNamTable = new javax.swing.JTable();
+        nhaCuaDoiSongScrollPane = new javax.swing.JScrollPane();
+        nhaCuaDoiSongTable = new javax.swing.JTable();
         theoDoiGiaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,7 +93,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(444, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(168, 168, 168))
         );
@@ -209,7 +209,7 @@ public class Home extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -305,14 +305,14 @@ public class Home extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,40 +413,12 @@ public class Home extends javax.swing.JFrame {
         });
         nhaSachTikiScrollPane.setViewportView(nhaSachTikiTable);
         if (nhaSachTikiTable.getColumnModel().getColumnCount() > 0) {
-            nhaSachTikiTable.getColumnModel().getColumn(0).setResizable(false);
+            nhaSachTikiTable.getColumnModel().getColumn(0).setMinWidth(40);
+            nhaSachTikiTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            nhaSachTikiTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Nhà sách Tiki", nhaSachTikiScrollPane);
-
-        nhaCuaDoiSongTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        nhaCuaDoiSongScrollPane.setViewportView(nhaCuaDoiSongTable);
-        if (nhaCuaDoiSongTable.getColumnModel().getColumnCount() > 0) {
-            nhaCuaDoiSongTable.getColumnModel().getColumn(0).setResizable(false);
-        }
-
-        listSanPham.addTab("Nhà cửa đời sống", nhaCuaDoiSongScrollPane);
 
         mayAnhTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -473,7 +445,9 @@ public class Home extends javax.swing.JFrame {
         });
         mayAnhScrollPane.setViewportView(mayAnhTable);
         if (mayAnhTable.getColumnModel().getColumnCount() > 0) {
-            mayAnhTable.getColumnModel().getColumn(0).setResizable(false);
+            mayAnhTable.getColumnModel().getColumn(0).setMinWidth(40);
+            mayAnhTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            mayAnhTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Máy ảnh", mayAnhScrollPane);
@@ -503,7 +477,9 @@ public class Home extends javax.swing.JFrame {
         });
         laptopMayViTinhLinhKienScrollPane.setViewportView(laptopMayViTinhLinhKienTable);
         if (laptopMayViTinhLinhKienTable.getColumnModel().getColumnCount() > 0) {
-            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setResizable(false);
+            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setMinWidth(40);
+            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Laptop máy vi tính linh kiện", laptopMayViTinhLinhKienScrollPane);
@@ -533,7 +509,9 @@ public class Home extends javax.swing.JFrame {
         });
         dongHoVaTrangSucScrollPane.setViewportView(dongHoVaTrangSucTable);
         if (dongHoVaTrangSucTable.getColumnModel().getColumnCount() > 0) {
-            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setResizable(false);
+            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setMinWidth(40);
+            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Đồng hồ và trang sức", dongHoVaTrangSucScrollPane);
@@ -563,7 +541,9 @@ public class Home extends javax.swing.JFrame {
         });
         baloVaValiScrollPane.setViewportView(baloVaValiTable);
         if (baloVaValiTable.getColumnModel().getColumnCount() > 0) {
-            baloVaValiTable.getColumnModel().getColumn(0).setResizable(false);
+            baloVaValiTable.getColumnModel().getColumn(0).setMinWidth(40);
+            baloVaValiTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            baloVaValiTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Balo và vali", baloVaValiScrollPane);
@@ -593,7 +573,9 @@ public class Home extends javax.swing.JFrame {
         });
         tuiThoiTrangNamScrollPane.setViewportView(tuiThoiTrangNamTable);
         if (tuiThoiTrangNamTable.getColumnModel().getColumnCount() > 0) {
-            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setResizable(false);
+            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setMinWidth(40);
+            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Túi thời trang nam", tuiThoiTrangNamScrollPane);
@@ -623,25 +605,57 @@ public class Home extends javax.swing.JFrame {
         });
         giayDepNamScrollPane.setViewportView(giayDepNamTable);
         if (giayDepNamTable.getColumnModel().getColumnCount() > 0) {
-            giayDepNamTable.getColumnModel().getColumn(0).setResizable(false);
+            giayDepNamTable.getColumnModel().getColumn(0).setMinWidth(40);
+            giayDepNamTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            giayDepNamTable.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
         listSanPham.addTab("Giày dép nam ", giayDepNamScrollPane);
+
+        nhaCuaDoiSongTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        nhaCuaDoiSongScrollPane.setViewportView(nhaCuaDoiSongTable);
+        if (nhaCuaDoiSongTable.getColumnModel().getColumnCount() > 0) {
+            nhaCuaDoiSongTable.getColumnModel().getColumn(0).setMinWidth(40);
+            nhaCuaDoiSongTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            nhaCuaDoiSongTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Nhà cửa đời sống", nhaCuaDoiSongScrollPane);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(listSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listSanPham)))
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -671,10 +685,12 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
