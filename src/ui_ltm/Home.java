@@ -5,8 +5,11 @@
  */
 package ui_ltm;
 
+import java.awt.Component;
 import java.io.IOException;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,6 +24,15 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
+    private static String dataNhaSachTiki = "";
+    private static String dataNhaCuaDoiSong = "";
+    private static String dataMayAnh = "";
+    private static String dataLaptopMayViTinhLinkKien = "";
+    private static String dataDongHoVaTrangSuc = "";
+    private static String dataBaloVaVali = "";
+    private static String dataTuiThoiTrangNam = "";
+    private static String dataGiayDepNam = "";
+    
     public Home() {
         initComponents();
     }
@@ -63,6 +75,8 @@ public class Home extends javax.swing.JFrame {
         listSanPham = new javax.swing.JTabbedPane();
         nhaSachTikiScrollPane = new javax.swing.JScrollPane();
         nhaSachTikiTable = new javax.swing.JTable();
+        nhaCuaDoiSongScrollPane = new javax.swing.JScrollPane();
+        nhaCuaDoiSongTable = new javax.swing.JTable();
         mayAnhScrollPane = new javax.swing.JScrollPane();
         mayAnhTable = new javax.swing.JTable();
         laptopMayViTinhLinhKienScrollPane = new javax.swing.JScrollPane();
@@ -75,8 +89,6 @@ public class Home extends javax.swing.JFrame {
         tuiThoiTrangNamTable = new javax.swing.JTable();
         giayDepNamScrollPane = new javax.swing.JScrollPane();
         giayDepNamTable = new javax.swing.JTable();
-        nhaCuaDoiSongScrollPane = new javax.swing.JScrollPane();
-        nhaCuaDoiSongTable = new javax.swing.JTable();
         theoDoiGiaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -308,7 +320,7 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 264, Short.MAX_VALUE)
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
@@ -411,6 +423,7 @@ public class Home extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        nhaSachTikiTable.setName("nha-sach-tiki"); // NOI18N
         nhaSachTikiScrollPane.setViewportView(nhaSachTikiTable);
         if (nhaSachTikiTable.getColumnModel().getColumnCount() > 0) {
             nhaSachTikiTable.getColumnModel().getColumn(0).setMinWidth(40);
@@ -420,197 +433,7 @@ public class Home extends javax.swing.JFrame {
 
         listSanPham.addTab("Nhà sách Tiki", nhaSachTikiScrollPane);
 
-        mayAnhTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        mayAnhScrollPane.setViewportView(mayAnhTable);
-        if (mayAnhTable.getColumnModel().getColumnCount() > 0) {
-            mayAnhTable.getColumnModel().getColumn(0).setMinWidth(40);
-            mayAnhTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-            mayAnhTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        }
-
-        listSanPham.addTab("Máy ảnh", mayAnhScrollPane);
-
-        laptopMayViTinhLinhKienTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        laptopMayViTinhLinhKienScrollPane.setViewportView(laptopMayViTinhLinhKienTable);
-        if (laptopMayViTinhLinhKienTable.getColumnModel().getColumnCount() > 0) {
-            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setMinWidth(40);
-            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        }
-
-        listSanPham.addTab("Laptop máy vi tính linh kiện", laptopMayViTinhLinhKienScrollPane);
-
-        dongHoVaTrangSucTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        dongHoVaTrangSucScrollPane.setViewportView(dongHoVaTrangSucTable);
-        if (dongHoVaTrangSucTable.getColumnModel().getColumnCount() > 0) {
-            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setMinWidth(40);
-            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        }
-
-        listSanPham.addTab("Đồng hồ và trang sức", dongHoVaTrangSucScrollPane);
-
-        baloVaValiTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        baloVaValiScrollPane.setViewportView(baloVaValiTable);
-        if (baloVaValiTable.getColumnModel().getColumnCount() > 0) {
-            baloVaValiTable.getColumnModel().getColumn(0).setMinWidth(40);
-            baloVaValiTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-            baloVaValiTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        }
-
-        listSanPham.addTab("Balo và vali", baloVaValiScrollPane);
-
-        tuiThoiTrangNamTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tuiThoiTrangNamScrollPane.setViewportView(tuiThoiTrangNamTable);
-        if (tuiThoiTrangNamTable.getColumnModel().getColumnCount() > 0) {
-            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setMinWidth(40);
-            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        }
-
-        listSanPham.addTab("Túi thời trang nam", tuiThoiTrangNamScrollPane);
-
-        giayDepNamTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Sản phẩm"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        giayDepNamScrollPane.setViewportView(giayDepNamTable);
-        if (giayDepNamTable.getColumnModel().getColumnCount() > 0) {
-            giayDepNamTable.getColumnModel().getColumn(0).setMinWidth(40);
-            giayDepNamTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-            giayDepNamTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        }
-
-        listSanPham.addTab("Giày dép nam ", giayDepNamScrollPane);
+        nhaCuaDoiSongScrollPane.setName("nha-cua-doi-song"); // NOI18N
 
         nhaCuaDoiSongTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -643,6 +466,206 @@ public class Home extends javax.swing.JFrame {
         }
 
         listSanPham.addTab("Nhà cửa đời sống", nhaCuaDoiSongScrollPane);
+
+        mayAnhTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        mayAnhTable.setName("may-anh"); // NOI18N
+        mayAnhScrollPane.setViewportView(mayAnhTable);
+        if (mayAnhTable.getColumnModel().getColumnCount() > 0) {
+            mayAnhTable.getColumnModel().getColumn(0).setMinWidth(40);
+            mayAnhTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            mayAnhTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Máy ảnh", mayAnhScrollPane);
+
+        laptopMayViTinhLinhKienTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        laptopMayViTinhLinhKienTable.setName("laptop-may-vi-tinh-linh-kien"); // NOI18N
+        laptopMayViTinhLinhKienScrollPane.setViewportView(laptopMayViTinhLinhKienTable);
+        if (laptopMayViTinhLinhKienTable.getColumnModel().getColumnCount() > 0) {
+            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setMinWidth(40);
+            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Laptop máy vi tính linh kiện", laptopMayViTinhLinhKienScrollPane);
+
+        dongHoVaTrangSucTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        dongHoVaTrangSucTable.setName("dong-ho-va-trang-suc"); // NOI18N
+        dongHoVaTrangSucScrollPane.setViewportView(dongHoVaTrangSucTable);
+        if (dongHoVaTrangSucTable.getColumnModel().getColumnCount() > 0) {
+            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setMinWidth(40);
+            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            dongHoVaTrangSucTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Đồng hồ và trang sức", dongHoVaTrangSucScrollPane);
+
+        baloVaValiTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        baloVaValiTable.setName("balo-va-vali"); // NOI18N
+        baloVaValiScrollPane.setViewportView(baloVaValiTable);
+        if (baloVaValiTable.getColumnModel().getColumnCount() > 0) {
+            baloVaValiTable.getColumnModel().getColumn(0).setMinWidth(40);
+            baloVaValiTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            baloVaValiTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Balo và vali", baloVaValiScrollPane);
+
+        tuiThoiTrangNamScrollPane.setName(""); // NOI18N
+
+        tuiThoiTrangNamTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tuiThoiTrangNamTable.setName("tui-thoi-trang-nam"); // NOI18N
+        tuiThoiTrangNamScrollPane.setViewportView(tuiThoiTrangNamTable);
+        if (tuiThoiTrangNamTable.getColumnModel().getColumnCount() > 0) {
+            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setMinWidth(40);
+            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tuiThoiTrangNamTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Túi thời trang nam", tuiThoiTrangNamScrollPane);
+
+        giayDepNamTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        giayDepNamTable.setName("giay-dep-nam"); // NOI18N
+        giayDepNamScrollPane.setViewportView(giayDepNamTable);
+        if (giayDepNamTable.getColumnModel().getColumnCount() > 0) {
+            giayDepNamTable.getColumnModel().getColumn(0).setMinWidth(40);
+            giayDepNamTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            giayDepNamTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Giày dép nam ", giayDepNamScrollPane);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -710,8 +733,21 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
-        Chitietsp chiTietForm = new Chitietsp();
-        chiTietForm.setVisible(true);
+          
+        Chitietsp chitietsp = new Chitietsp();
+        chitietsp.setVisible(true);
+        int tabIndex = listSanPham.getSelectedIndex();
+        Component tabComponent = listSanPham.getComponentAt(tabIndex);
+        JScrollPane scrollPane = (JScrollPane)tabComponent;
+        JViewport viewport = scrollPane.getViewport();
+        //JViewport sẽ chứa bảng nên sẽ dùng nó để gọi bảng ra
+        JTable table = (JTable)viewport.getView();
+        int selectedRow = table.getSelectedRow();
+          if (selectedRow >= 0) {
+              int id = (int) table.getValueAt(selectedRow, 0);
+              String name = (String) table.getValueAt(selectedRow, 1);
+              System.out.println(id + "\n" + name + "\n" + table.getName()+ "\n" + dataNhaSachTiki);
+          }
         
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
 
@@ -719,12 +755,37 @@ public class Home extends javax.swing.JFrame {
 
   
     }//GEN-LAST:event_nhasachtikiMouseClicked
-    
-    
+   
     
     public static void  handleDataTable(JTable table, String categoryID) {
-
+        
         String dataReceive = TikiTrackPriceClient.handleListProduct("GetListProduct", categoryID);
+        switch(categoryID) {
+            case "nha-sach-tiki":
+                dataNhaSachTiki = dataReceive;
+                break; 
+            case "nha-cua-doi-song":
+                dataNhaCuaDoiSong = dataReceive;
+                break;  
+            case "may-anh":
+                dataMayAnh = dataReceive;
+                break;     
+            case "laptop-may-vi-tinh-linh-kien":
+                dataLaptopMayViTinhLinkKien = dataReceive;
+                break; 
+            case "dong-ho-va-trang-suc":
+                dataDongHoVaTrangSuc = dataReceive;
+                break;     
+            case "balo-va-vali":
+                dataBaloVaVali = dataReceive;
+                break;               
+            case "tui-thoi-trang-nam":
+                dataTuiThoiTrangNam = dataReceive;
+                break;                
+            case "giay-dep-nam":
+                dataGiayDepNam = dataReceive;
+                break;    
+        }
         JSONObject jsReceive = new JSONObject(dataReceive);
         JSONArray arrReceive = new JSONArray(jsReceive.getJSONArray("list product"));
         DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
@@ -748,6 +809,10 @@ public class Home extends javax.swing.JFrame {
         handleDataTable(tuiThoiTrangNamTable, "tui-thoi-trang-nam");
         handleDataTable(giayDepNamTable, "giay-dep-nam");
     }
+    
+    public void hideTable() {
+        nhaCuaDoiSongScrollPane.setVisible(false);
+    }
     /**
      * @param args the command line arguments
      */
@@ -759,7 +824,7 @@ public class Home extends javax.swing.JFrame {
                 Home home = new Home();
                 home.setVisible(true);
                 home.sendDataTable();
-                
+ 
             }
         });
     }
