@@ -79,14 +79,14 @@ public class Worker implements Runnable { //triển khai các phương thức c�
                 case "GetListProduct":
                     dataSend = getListProduct(data);
                     break;
-                case "getPriceAndDate":
-//                    dataSend = getPriceAndDate(input[1]);
+                case "GetListPriceAndDate":
+                    dataSend = getListPriceAndDate(data);
                     break;
 
                 default:
 //                    return input[0];
             }
-
+            
             return dataSend;
         } catch (IOException e) {
             System.out.println(e);
@@ -99,10 +99,10 @@ public class Worker implements Runnable { //triển khai các phương thức c�
         return ConnectDB.getListProduct(categoryID);
     }
 
-    private String getPriceAndDate(String productID) {
-        return ConnectDB.getPriceAndDate(productID);
+    private String getListPriceAndDate(String productID) {
+        return ConnectDB.getListPriceAndDate(productID);
     }
-    private void closeSocket() {
+    private void closeSocket()      {
         try {
             in.close();
             out.close();

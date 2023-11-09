@@ -43,60 +43,6 @@ public class ConnectDB {
 
     }
 
-    public static String getCategory() {
-        JSONObject jsCategory = new JSONObject();
-        try {
-            String sqlCategory = "Select CategoryID, CategoryName from category";
-            Statement statement = conn.createStatement();
-            //Tạo đối tượng "Statement" để thực thi câu lệnh SQL
-            ResultSet rs = statement.executeQuery(sqlCategory);
-            //Dùng đối tượng "Statement" thực thi câu lệnh SQL và lưu kết quả vào đối tượng "ResultSet"
-
-            JSONArray arrCategory = new JSONArray();
-            while (rs.next()) {
-                JSONObject contentCategory = new JSONObject();
-                contentCategory.put("CategoryID", rs.getString("CategoryID"));
-                contentCategory.put("CategoryName", rs.getString("CategoryName"));
-                arrCategory.put(contentCategory);
-            }
-            jsCategory.put("Success", "true");
-            jsCategory.put("Category", arrCategory);
-            return jsCategory.toString();
-        } catch (Exception e) {
-            jsCategory.put("Success", "false");
-            jsCategory.put("Error", "Đã có lỗi lấy dữ liệu danh mục.");
-            e.printStackTrace();
-            return jsCategory.toString();
-        }
-    }
-
-    public static String getPriceAndDate(String productID) {
-        JSONObject jsPriceAndeDate = new JSONObject();
-        try {
-            String sqlPriceAndDate = "Select Price, SearchDate from final_product_detail where ProductID =" + productID;
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sqlPriceAndDate);
-            JSONArray arrPriceAndeDate = new JSONArray();
-
-            while (rs.next()) {
-                JSONObject contentPriceAndDate = new JSONObject();
-                contentPriceAndDate.put("Price", rs.getString("Price"));
-                contentPriceAndDate.put("SearchDate", rs.getString("SearchDate"));
-                arrPriceAndeDate.put(contentPriceAndDate);
-            }
-
-            jsPriceAndeDate.put("Success", "true");
-            jsPriceAndeDate.put("Price And Date", arrPriceAndeDate);
-            return jsPriceAndeDate.toString();
-        } catch (Exception e) {
-            jsPriceAndeDate.put("Success", "false");
-            jsPriceAndeDate.put("Error", "Đã có lỗi lấy dữ liệu giá và ngày tra cứu.");
-            e.printStackTrace();
-            return jsPriceAndeDate.toString();
-        }
-
-    }
-
     public static String getListProduct(String categoryID) {
         JSONObject jsListProduct = new JSONObject();
         try {
@@ -107,9 +53,14 @@ public class ConnectDB {
             JSONArray arrListProduct = new JSONArray();
             while (rs.next()) {
                 JSONObject contentListProduct = new JSONObject();
-                contentListProduct.put("productID", rs.getString("ProductID"));
+                String productID = rs.getString("ProductID");
+                
+                contentListProduct.put("productID", productID);
                 contentListProduct.put("name", rs.getString("Name"));
+                
+               
                 arrListProduct.put(contentListProduct);
+   
             }
             jsListProduct.put("list product", arrListProduct);
             return jsListProduct.toString();
@@ -118,6 +69,29 @@ public class ConnectDB {
             e.printStackTrace();
             return jsListProduct.toString();
         }
+    }
+    
+    public static String getListPriceAndDate(String productID) {
+            String sqlPriceAndDate = "Select Price, SearchDate from final_product_detail where ProductID=" + productID + " ORDER BY SearchDate";
+            try {
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(sqlPriceAndDate);
+                JSONObject jsListPriceAndDate = new JSONObject();
+                JSONArray arrListPriceAndDate = new JSONArray();
+            
+                while (rs.next()) {
+                   JSONObject contentListPriceAndDate = new JSONObject();
+                   contentListPriceAndDate.put("price", rs.getString("Price"));
+                   contentListPriceAndDate.put("searchDate", rs.getDate("SearchDate"));
+                   arrListPriceAndDate.put(contentListPriceAndDate);
+                }
+                jsListPriceAndDate.put("ListPriceAndDate", arrListPriceAndDate);
+                return jsListPriceAndDate.toString();
+            } catch (Exception e) {
+                System.out.println(e);
+                return null;
+            }        
+        
     }
 
 

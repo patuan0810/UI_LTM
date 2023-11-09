@@ -458,6 +458,7 @@ public class Home extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        nhaCuaDoiSongTable.setName("nha-cua-doi-song"); // NOI18N
         nhaCuaDoiSongScrollPane.setViewportView(nhaCuaDoiSongTable);
         if (nhaCuaDoiSongTable.getColumnModel().getColumnCount() > 0) {
             nhaCuaDoiSongTable.getColumnModel().getColumn(0).setMinWidth(40);
@@ -744,9 +745,14 @@ public class Home extends javax.swing.JFrame {
         JTable table = (JTable)viewport.getView();
         int selectedRow = table.getSelectedRow();
           if (selectedRow >= 0) {
-              int id = (int) table.getValueAt(selectedRow, 0);
+              int stt = (int) table.getValueAt(selectedRow, 0);
               String name = (String) table.getValueAt(selectedRow, 1);
-              System.out.println(id + "\n" + name + "\n" + table.getName()+ "\n" + dataNhaSachTiki);
+              String tableName = table.getName();
+              System.out.println(stt + "\n" + name + "\n" + table.getName()+ "\n" + dataNhaSachTiki);
+              
+              String productID = getProductID(tableName, stt);
+              String listPriceAndDate = getListPriceAndDate(productID);
+              System.out.println(listPriceAndDate);
           }
         
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
@@ -810,8 +816,47 @@ public class Home extends javax.swing.JFrame {
         handleDataTable(giayDepNamTable, "giay-dep-nam");
     }
     
-    public void hideTable() {
-        nhaCuaDoiSongScrollPane.setVisible(false);
+    public String getProductID(String tableName, int stt) {
+        String listProduct = "";
+        switch(tableName) {
+            case "nha-sach-tiki":
+                listProduct = dataNhaSachTiki;
+                break; 
+            case "nha-cua-doi-song":
+                listProduct = dataNhaCuaDoiSong;
+                break;  
+            case "may-anh":
+                listProduct = dataMayAnh;
+                break;     
+            case "laptop-may-vi-tinh-linh-kien":
+                listProduct = dataLaptopMayViTinhLinkKien;
+                break; 
+            case "dong-ho-va-trang-suc":
+                listProduct = dataDongHoVaTrangSuc;
+                break;     
+            case "balo-va-vali":
+                listProduct = dataBaloVaVali;
+                break;               
+            case "tui-thoi-trang-nam":
+                listProduct = dataTuiThoiTrangNam;
+                break;                
+            case "giay-dep-nam":
+                listProduct = dataGiayDepNam;
+                break;   
+        }
+        
+        JSONObject jsListProduct = new JSONObject(listProduct);
+        JSONArray arrListProduct = new JSONArray(jsListProduct.getJSONArray("list product"));
+        JSONObject contentListProduct = arrListProduct.getJSONObject(stt - 1);
+        
+        String productID = contentListProduct.getString("productID");
+        System.out.println("Product ID dang tim la " + productID);
+        return productID;
+    }
+    
+    public String getListPriceAndDate(String productID) {
+         String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
+         return listPriceAndDate;
     }
     /**
      * @param args the command line arguments
