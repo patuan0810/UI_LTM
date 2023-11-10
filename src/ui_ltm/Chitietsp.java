@@ -273,7 +273,7 @@ public class Chitietsp extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel2.setBackground(new java.awt.Color(51, 102, 255));
 
         jLabel1.setBackground(new java.awt.Color(255, 0, 0));
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
@@ -296,7 +296,7 @@ public class Chitietsp extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel6.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel6.setBackground(new java.awt.Color(51, 153, 255));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -364,7 +364,7 @@ public class Chitietsp extends javax.swing.JFrame {
                 .addContainerGap(211, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel5.setBackground(new java.awt.Color(51, 102, 255));
 
         jLabel2.setBackground(new java.awt.Color(0, 102, 102));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
@@ -432,7 +432,7 @@ public class Chitietsp extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, Short.MAX_VALUE)
         );
 
         pack();
