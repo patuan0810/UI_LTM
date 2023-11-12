@@ -16,7 +16,9 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import org.json.JSONException;
 import java.util.Arrays;
-
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author ACER
@@ -109,7 +111,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setText("Tìm Kiếm");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -486,8 +487,30 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String searchText = jTextField2.getText().trim();
+        performSearch(searchText);
     }//GEN-LAST:event_jButton1ActionPerformed
+private void performSearch(String searchText) {
+        TableRowSorter<TableModel> sorter;
 
+        // Iterate through all tables and apply the search filter
+        for (int i = 0; i < listSanPham.getTabCount(); i++) {
+            Component tabComponent = listSanPham.getComponentAt(i);
+            JScrollPane scrollPane = (JScrollPane) tabComponent;
+            JViewport viewport = scrollPane.getViewport();
+            JTable table = (JTable) viewport.getView();
+
+            sorter = new TableRowSorter<>(table.getModel());
+            table.setRowSorter(sorter);
+
+            if (!searchText.isEmpty()) {
+                RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
+                sorter.setRowFilter(rowFilter);
+            } else {
+                sorter.setRowFilter(null);
+            }
+        }
+    }
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
         
         int tabIndex = listSanPham.getSelectedIndex();
