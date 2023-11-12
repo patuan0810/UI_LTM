@@ -74,6 +74,7 @@ public class Worker implements Runnable { //triển khai các phương thức c�
             String request = jsReceive.getString("request");
             String data = jsReceive.getString("data");
             String dataSend = "";
+//            System.out.println("test " + data );
             switch (request)
             {
                 case "GetListProduct":
@@ -82,6 +83,9 @@ public class Worker implements Runnable { //triển khai các phương thức c�
                 case "GetListPriceAndDate":
                     dataSend = getListPriceAndDate(data);
                     break;
+//                case "GetImageURL":
+//                    dataSend = getImageURL(data);
+//                    break;
 
                 default:
 //                    return input[0];
@@ -102,6 +106,8 @@ public class Worker implements Runnable { //triển khai các phương thức c�
     private String getListPriceAndDate(String productID) {
         return ConnectDB.getListPriceAndDate(productID);
     }
+    
+    
     private void closeSocket()      {
         try {
             in.close();

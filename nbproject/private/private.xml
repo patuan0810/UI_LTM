@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ACER/Documents/NetBeansProjects/UI_LTM/src/server/TikiTrackPriceServer.java</file>
-            <file>file:/C:/Users/ACER/Documents/NetBeansProjects/UI_LTM/src/ui_ltm/Home.java</file>
+            <file>file:/E:/netbeans/code/UI_LTM/src/server/TikiTrackPriceServer.java</file>
+            <file>file:/E:/netbeans/code/UI_LTM/src/server/Worker.java</file>
+            <file>file:/E:/netbeans/code/UI_LTM/src/ui_ltm/Home.java</file>
+            <file>file:/E:/netbeans/code/UI_LTM/src/ui_ltm/UI_LTM.java</file>
+            <file>file:/E:/netbeans/code/UI_LTM/src/ui_ltm/Chitietsp.java</file>
+            <file>file:/E:/netbeans/code/UI_LTM/src/server/ConnectDB.java</file>
         </group>
     </open-files>
 </project-private>

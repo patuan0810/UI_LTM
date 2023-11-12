@@ -43,10 +43,10 @@ public class ConnectDB {
 
     }
 
-    public static String getListProduct(String categoryID) {
+        public static String getListProduct(String categoryID) {
         JSONObject jsListProduct = new JSONObject();
         try {
-            String sqlCategory = "Select ProductID, Name from product where CategoryID = '" + categoryID + "' ORDER BY Name" ;
+            String sqlCategory = "SELECT ProductID, Name, ImageURL FROM product WHERE CategoryID = '" + categoryID + "' ORDER BY Name";
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sqlCategory);
 
@@ -54,13 +54,12 @@ public class ConnectDB {
             while (rs.next()) {
                 JSONObject contentListProduct = new JSONObject();
                 String productID = rs.getString("ProductID");
-                
+
                 contentListProduct.put("productID", productID);
                 contentListProduct.put("name", rs.getString("Name"));
-                
-               
+                contentListProduct.put("imageURL", rs.getString("ImageURL"));
+
                 arrListProduct.put(contentListProduct);
-   
             }
             jsListProduct.put("list product", arrListProduct);
             return jsListProduct.toString();
@@ -91,7 +90,6 @@ public class ConnectDB {
                 System.out.println(e);
                 return null;
             }        
-        
     }
 
 
