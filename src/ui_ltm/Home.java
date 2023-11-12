@@ -489,7 +489,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
-        Chitietsp chitietsp = new Chitietsp();
+        
         int tabIndex = listSanPham.getSelectedIndex();
         Component tabComponent = listSanPham.getComponentAt(tabIndex);
         JScrollPane scrollPane = (JScrollPane) tabComponent;
@@ -514,16 +514,17 @@ public class Home extends javax.swing.JFrame {
             System.out.println(Arrays.toString(rowData));
             
             String productID = getProductID(tableName, stt);
-            String ListPrice = getListPrice(productID);
+            String lastestPrice = getLastestPrice(productID);
             String imageURL = getImageURL(tableName, stt);
+            String listPriceAndDate = getListPrice(productID);
 
-            System.out.println("ID: " + productID + "\n name: " + name +  "\n Gia:" + ListPrice + "\n Anh: " + imageURL);
+            System.out.println("ID: " + productID + "\n name: " + name +  "\n Gia:" + lastestPrice + "\n Anh: " + imageURL);
             // Chuyển thông tin sản phẩm được chọn đến Chitietsp
-            
+            Chitietsp chitietsp = new Chitietsp(listPriceAndDate);
             chitietsp.setSelectedProductName(name);
-            chitietsp.setSelectedProductPrice(ListPrice);
+            chitietsp.setSelectedProductPrice(lastestPrice);
             chitietsp.setSelectedProductImageURL(imageURL);
-            
+//            chitietsp.sendDataChart(listPriceAndDate);
             chitietsp.setVisible(true);
         }
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
@@ -630,7 +631,7 @@ public class Home extends javax.swing.JFrame {
         return productID;
     }
     
-        public String getListPrice(String productID) {
+        public String getLastestPrice(String productID) {
             String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
             
             // Parse JSON response to extract the price
@@ -687,6 +688,15 @@ public class Home extends javax.swing.JFrame {
 //        System.out.println("URL dang tim la " + imageURL);
         return imageURL;
     }
+        
+        public String getListPrice(String productID) {
+            String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
+            
+            // Parse JSON response to extract the price
+            JSONObject jsonObject = new JSONObject(listPriceAndDate);
+            JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");          
+           return priceAndDateArray.toString();
+        }
   
         
 //        public String getListPriceAndDate(String productID) {

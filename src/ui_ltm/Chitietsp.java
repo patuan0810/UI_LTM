@@ -29,17 +29,16 @@ public class Chitietsp extends javax.swing.JFrame {
     /**
      * Creates new form Chitietsp
      */
-    public Chitietsp() {
+    public Chitietsp(String listPriceandDate) {
         initComponents();
-        
+        JFreeChart chart = createChart(listPriceandDate);
+        // Tạo một ChartPanel để hiển thị biểu đồ
+        ChartPanel chartPanel = new ChartPanel(chart);
         // Hiển thị thông tin sản phẩm trong giao diện của Chitietsp
         updateProductDetails();
 
 //         Tạo biểu đồ
-        JFreeChart chart = createChart();
-
-        // Tạo một ChartPanel để hiển thị biểu đồ
-        ChartPanel chartPanel = new ChartPanel(chart);
+        
 
         // Thêm ChartPanel vào jPanel4
         bieuDoPanel.setLayout(new BorderLayout());
@@ -485,6 +484,12 @@ public class Chitietsp extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     
+    public void sendDataChart(String data) {
+        JFreeChart chart = createChart(data);
+        // Tạo một ChartPanel để hiển thị biểu đồ
+        ChartPanel chartPanel = new ChartPanel(chart);
+    }
+    
     public void setSelectedProductName(String productName) {
         this.selectedProductName = productName;
         updateProductDetails();
@@ -501,6 +506,7 @@ public class Chitietsp extends javax.swing.JFrame {
         updateProductDetails(); // Gọi lại phương thức để cập nhật giao diện người dùng
     }
     }
+    
 
    
     
@@ -552,8 +558,8 @@ public class Chitietsp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Chitietsp chiTietSp = new Chitietsp();
-                chiTietSp.setVisible(true);
+//                Chitietsp chiTietSp = new Chitietsp();
+//                chiTietSp.setVisible(true);
             }
         });
     }
