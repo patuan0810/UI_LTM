@@ -491,26 +491,49 @@ public class Home extends javax.swing.JFrame {
         performSearch(searchText);
     }//GEN-LAST:event_jButton1ActionPerformed
 private void performSearch(String searchText) {
-        TableRowSorter<TableModel> sorter;
+    TableRowSorter<TableModel> sorter;
 
-        // Iterate through all tables and apply the search filter
-        for (int i = 0; i < listSanPham.getTabCount(); i++) {
-            Component tabComponent = listSanPham.getComponentAt(i);
-            JScrollPane scrollPane = (JScrollPane) tabComponent;
-            JViewport viewport = scrollPane.getViewport();
-            JTable table = (JTable) viewport.getView();
+    // Iterate through all tables and apply the search filter
+    for (int i = 0; i < listSanPham.getTabCount(); i++) {
+        Component tabComponent = listSanPham.getComponentAt(i);
+        JScrollPane scrollPane = (JScrollPane) tabComponent;
+        JViewport viewport = scrollPane.getViewport();
+        JTable table = (JTable) viewport.getView();
 
-            sorter = new TableRowSorter<>(table.getModel());
-            table.setRowSorter(sorter);
+        sorter = new TableRowSorter<>(table.getModel());
+        table.setRowSorter(sorter);
 
-            if (!searchText.isEmpty()) {
-                RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
-                sorter.setRowFilter(rowFilter);
-            } else {
-                sorter.setRowFilter(null);
+        sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
+            @Override
+            public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
+                int modelRow = entry.getIdentifier();
+                int viewRow = table.convertRowIndexToView(modelRow);
+
+                // Get the text content of the row
+                StringBuilder rowText = new StringBuilder();
+                for (int col = 0; col < table.getColumnCount(); col++) {
+                    rowText.append(table.getValueAt(modelRow, col)).append(" ");
+                }
+
+                // Perform a simple fuzzy match
+                return isFuzzyMatch(rowText.toString().toLowerCase(), searchText.toLowerCase());
             }
+        });
+    }
+}
+
+private boolean isFuzzyMatch(String rowText, String searchText) {
+    // Perform a simple fuzzy match
+    int searchTextIndex = 0;
+    for (int i = 0; i < rowText.length(); i++) {
+        if (searchTextIndex < searchText.length() && rowText.charAt(i) == searchText.charAt(searchTextIndex)) {
+            searchTextIndex++;
         }
     }
+
+    return searchTextIndex == searchText.length();
+}
+
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
         
         int tabIndex = listSanPham.getSelectedIndex();
