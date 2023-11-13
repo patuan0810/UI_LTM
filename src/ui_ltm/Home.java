@@ -730,7 +730,7 @@ private void performSearch(String searchText) {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-      TikiTrackPriceClient client = new TikiTrackPriceClient("localhost", 4444);
+      TikiTrackPriceClient client = new TikiTrackPriceClient(4444);
     
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -11,6 +11,8 @@ package server;
 import org.json.JSONObject;
 import java.io.*;
 import java.net.Socket;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
 public class Worker implements Runnable { //triển khai các phương thức có trong Runnable, cụ thể là phương thức run()
     private Socket socket;
@@ -25,6 +27,7 @@ public class Worker implements Runnable { //triển khai các phương thức c�
         System.out.println("Client " + socket.toString() + " accepted");
 
         try {
+            postIP();
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             String dataSend = "";
@@ -48,7 +51,22 @@ public class Worker implements Runnable { //triển khai các phương thức c�
         }
 
     }
-
+    public void postIP() {
+        try {
+            Socket socketGetIP = new Socket("google.com", 443);
+            String localIP = socketGetIP.getLocalAddress().toString().substring(1);
+            String api = "https://retoolapi.dev/lyMHm1/data/1/"; // Ghi vào dòng 1 trong DB
+            String jsonData = "{\"ip\":\"" + localIP + "\"}";
+            Jsoup.connect(api)
+                    .ignoreContentType(true).ignoreHttpErrors(true)
+                    .header("Content-Type", "application/json")
+                    .requestBody(jsonData)
+                    .method(Connection.Method.PUT).execute();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        
+    }
 
     public String sendDataClient(String dataSend) {
         try {
@@ -97,7 +115,7 @@ public class Worker implements Runnable { //triển khai các phương thức c�
             return "Đã có lỗi xử lí dữ liệu";
         }
 
-
+        
     }
     private String getListProduct(String categoryID) {
         return ConnectDB.getListProduct(categoryID);
