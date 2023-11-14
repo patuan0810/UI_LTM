@@ -37,6 +37,7 @@ public class Home extends javax.swing.JFrame {
     private static String dataBaloVaVali = "";
     private static String dataTuiThoiTrangNam = "";
     private static String dataGiayDepNam = "";
+    private String selectedProductID;
     
     public Home() {
         initComponents();
@@ -491,115 +492,80 @@ public class Home extends javax.swing.JFrame {
         String searchText = jTextField2.getText().trim();
         performSearch(searchText);
     }//GEN-LAST:event_jButton1ActionPerformed
-private void performSearch(String searchText) {
-    TableRowSorter<TableModel> sorter;
+    private void performSearch(String searchText) {
+        TableRowSorter<TableModel> sorter;
 
-    // Iterate through all tables and apply the search filter
-    for (int i = 0; i < listSanPham.getTabCount(); i++) {
-        Component tabComponent = listSanPham.getComponentAt(i);
-        JScrollPane scrollPane = (JScrollPane) tabComponent;
-        JViewport viewport = scrollPane.getViewport();
-        JTable table = (JTable) viewport.getView();
+        // Iterate through all tables and apply the search filter
+        for (int i = 0; i < listSanPham.getTabCount(); i++) {
+            Component tabComponent = listSanPham.getComponentAt(i);
+            JScrollPane scrollPane = (JScrollPane) tabComponent;
+            JViewport viewport = scrollPane.getViewport();
+            JTable table = (JTable) viewport.getView();
 
-        sorter = new TableRowSorter<>(table.getModel());
-        table.setRowSorter(sorter);
+            sorter = new TableRowSorter<>(table.getModel());
+            table.setRowSorter(sorter);
 
-        sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
-            @Override
-            public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
-                int modelRow = entry.getIdentifier();
-                int viewRow = table.convertRowIndexToView(modelRow);
+            sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
+                @Override
+                public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
+                    int modelRow = entry.getIdentifier();
+                    int viewRow = table.convertRowIndexToView(modelRow);
 
-                // Get the text content of the row
-                StringBuilder rowText = new StringBuilder();
-                for (int col = 0; col < table.getColumnCount(); col++) {
-                    rowText.append(table.getValueAt(modelRow, col)).append(" ");
+                    // Get the text content of the row
+                    StringBuilder rowText = new StringBuilder();
+                    for (int col = 0; col < table.getColumnCount(); col++) {
+                        rowText.append(table.getValueAt(modelRow, col)).append(" ");
+                    }
+
+                    // Perform a simple fuzzy match
+                    return isFuzzyMatch(rowText.toString().toLowerCase(), searchText.toLowerCase());
                 }
-
-                // Perform a simple fuzzy match
-                return isFuzzyMatch(rowText.toString().toLowerCase(), searchText.toLowerCase());
-            }
-        });
-    }
-}
-
-private boolean isFuzzyMatch(String rowText, String searchText) {
-    // Perform a simple fuzzy match
-    int searchTextIndex = 0;
-    for (int i = 0; i < rowText.length(); i++) {
-        if (searchTextIndex < searchText.length() && rowText.charAt(i) == searchText.charAt(searchTextIndex)) {
-            searchTextIndex++;
+            });
         }
     }
 
-    return searchTextIndex == searchText.length();
-}
-//public String getReview(String productID) {
-//    try {
-//        String dataReview = TikiTrackPriceClient.handleListProduct("GetReview", productID);
-//
-//        // Print the data for debugging
-//        System.out.println("Data Review: " + dataReview);
-//
-//        // Check if the data starts with '{' before creating a JSONObject
-//        if (dataReview.startsWith("{")) {
-//            JSONObject jsonObject = new JSONObject(dataReview);
-//
-//            // Assuming "dataReview" is a JSONArray inside the JSONObject
-//            JSONArray dataReviewArray = jsonObject.getJSONArray("dataReview");
-//
-//            // Your existing code to process the JSON data
-//            System.err.println(dataReviewArray);
-//            return dataReviewArray.toString();
-//        } else {
-//            // Handle non-JSON response, e.g., print an error message or throw an exception
-//            System.err.println("Invalid JSON format in dataReview");
-//            return "Invalid JSON format in dataReview";
-//        }
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//        return "Error processing dataReview: " + e.getMessage();
-//    }
-//}
+    private boolean isFuzzyMatch(String rowText, String searchText) {
+        // Perform a simple fuzzy match
+        int searchTextIndex = 0;
+        for (int i = 0; i < rowText.length(); i++) {
+            if (searchTextIndex < searchText.length() && rowText.charAt(i) == searchText.charAt(searchTextIndex)) {
+                searchTextIndex++;
+            }
+        }
+
+        return searchTextIndex == searchText.length();
+    }
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
         
         int tabIndex = listSanPham.getSelectedIndex();
-        Component tabComponent = listSanPham.getComponentAt(tabIndex);
-        JScrollPane scrollPane = (JScrollPane) tabComponent;
-        JViewport viewport = scrollPane.getViewport();
-        JTable table = (JTable) viewport.getView();
-        int selectedRow = table.getSelectedRow();
-        
-        
-     if (selectedRow >= 0) {
+    Component tabComponent = listSanPham.getComponentAt(tabIndex);
+    JScrollPane scrollPane = (JScrollPane) tabComponent;
+    JViewport viewport = scrollPane.getViewport();
+    JTable table = (JTable) viewport.getView();
+    int selectedRow = table.getSelectedRow();
+
+    if (selectedRow >= 0) {
         int stt = (int) table.getValueAt(selectedRow, 0);
-        String name = (String) table.getValueAt(selectedRow, 1);
         String tableName = table.getName();
 
         String productID = getProductID(tableName, stt);
-        String lastestPrice = getLastestPrice(productID);
-        String imageURL = getImageURL(tableName, stt);
-        String listPriceAndDate = getListPrice(productID);
-//        String review = getReview(productID);
 
-        System.out.println("ID: " + productID + "\n name: " + name +  "\n Gia:" + lastestPrice + "\n Anh: " + imageURL);
-        
-        // Kiểm tra giá trị của listPriceAndDate trước khi truyền vào Chitietsp
-        if ("N/A".equals(lastestPrice)) {
-            // Hiển thị thông báo hoặc xử lý lỗi nếu cần thiết
-            System.out.println("Không thể lấy thông tin giá sản phẩm. Kiểm tra lại dữ liệu.");
-        } else {
-            // Chuyển thông tin sản phẩm được chọn đến Chitietsp
-            Chitietsp chitietsp = new Chitietsp(listPriceAndDate);
-            chitietsp.setSelectedProductName(name);
-            chitietsp.setSelectedProductPrice(lastestPrice);
-            chitietsp.setSelectedProductImageURL(imageURL);
-            chitietsp.setSelectedProductID(productID);
-            // chitietsp.setReview(review);  // Set the review data in Chitietsp
+        // Thêm log để kiểm tra giá trị của productID
+//        System.out.println("Product ID: " + productID);
+
+        // Thêm kiểm tra trước khi mở Chitietsp
+        if (productID != null && !productID.isEmpty()) {
+            Chitietsp chitietsp = new Chitietsp(getListPrice(productID), productID);
+            chitietsp.setSelectedProductName((String) table.getValueAt(selectedRow, 1));
+            chitietsp.setSelectedProductPrice(getLastestPrice(productID));
+            chitietsp.setSelectedProductImageURL(getImageURL(tableName, stt));
             chitietsp.setVisible(true);
+        } else {
+            // Xử lý trường hợp productID không hợp lệ
+            System.err.println("Lỗi: productID không hợp lệ!");
         }
-    } 
+    }
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -714,7 +680,7 @@ private boolean isFuzzyMatch(String rowText, String searchText) {
             JSONObject jsonObject = new JSONObject(listPriceAndDate);
             JSONArray priceAndDateArray = jsonObject.optJSONArray("ListPriceAndDate");
 
-            System.out.println("price and date: " + listPriceAndDate);
+//            System.out.println("price and date: " + listPriceAndDate);
 
             // Kiểm tra xem mảng có tồn tại và không trống không
             if (priceAndDateArray != null && priceAndDateArray.length() > 0) {
@@ -781,36 +747,37 @@ private boolean isFuzzyMatch(String rowText, String searchText) {
         return imageURL;
     }
         
-public String getListPrice(String productID) {
-    String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
+    public String getListPrice(String productID) {
+        String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
 
-    try {
-        // Kiểm tra xem dữ liệu có đúng định dạng JSON không
-        if (listPriceAndDate.startsWith("{")) {
-            // Parse JSON response to extract the price
-            JSONObject jsonObject = new JSONObject(listPriceAndDate);
+        try {
+            // Kiểm tra xem dữ liệu có đúng định dạng JSON không
+            if (listPriceAndDate.startsWith("{")) {
+                // Parse JSON response to extract the price
+                
+                JSONObject jsonObject = new JSONObject(listPriceAndDate);
 
-            // Kiểm tra xem có mảng ListPriceAndDate không
-            if (jsonObject.has("ListPriceAndDate")) {
-                JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");
-                return priceAndDateArray.toString();
+                // Kiểm tra xem có mảng ListPriceAndDate không
+                if (jsonObject.has("ListPriceAndDate")) {
+                    JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");
+                    return priceAndDateArray.toString();
+                } else {
+                    // Xử lý khi không có mảng
+                    System.out.println("Không tìm thấy mảng ListPriceAndDate trong dữ liệu JSON.");
+                    return "N/A";
+                }
             } else {
-                // Xử lý khi không có mảng
-                System.out.println("Không tìm thấy mảng ListPriceAndDate trong dữ liệu JSON.");
+                // Xử lý khi dữ liệu không phải là JSON hợp lệ
+                System.out.println("Dữ liệu không phải là một đối tượng JSON hợp lệ.");
                 return "N/A";
             }
-        } else {
-            // Xử lý khi dữ liệu không phải là JSON hợp lệ
-            System.out.println("Dữ liệu không phải là một đối tượng JSON hợp lệ.");
+        } catch (JSONException e) {
+            // Xử lý lỗi khi không thể chuyển đổi thành JSON
+            e.printStackTrace();
+            System.out.println("JSONException: " + e.getMessage());
             return "N/A";
         }
-    } catch (JSONException e) {
-        // Xử lý lỗi khi không thể chuyển đổi thành JSON
-        e.printStackTrace();
-        System.out.println("JSONException: " + e.getMessage());
-        return "N/A";
     }
-}
 
 
 

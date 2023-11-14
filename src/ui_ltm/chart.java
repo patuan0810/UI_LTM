@@ -52,7 +52,7 @@ private static CategoryDataset createDataset(String data) {
     if (data.startsWith("[")) {
         try {
             JSONArray arrListDateAndPrice = new JSONArray(data);
-            System.out.println("Đang trong chart với data:" + arrListDateAndPrice.toString());
+//            System.out.println("Đang trong chart với data:" + arrListDateAndPrice.toString());
 
             for (int i = 0; i < arrListDateAndPrice.length(); i++) {
                 JSONObject contentPriceAndDate = arrListDateAndPrice.getJSONObject(i);
@@ -69,7 +69,7 @@ private static CategoryDataset createDataset(String data) {
                     oldFormatDate = oldDateFormat.parse(searchDate);
                     String newFormatDate = newDateFormat.format(oldFormatDate);
                     dataset.addValue(priceInt, "", newFormatDate);
-                    System.out.println("price: " + priceInt + "\n" + "searchDateFormat: " + searchDate);
+//                    System.out.println("price: " + priceInt + "\n" + "searchDateFormat: " + searchDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

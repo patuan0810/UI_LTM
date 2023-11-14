@@ -116,9 +116,9 @@ private String processData() {
                     case "GetListPriceAndDate":
                         dataSend = getListPriceAndDate(data);
                         break;
-                    case "GetReview":
-                        dataSend = getReview(data);
-                        break;
+//                    case "GetReview":
+//                        dataSend = getReview(data);
+//                        break;
                     default:
                         // Handle unknown request
                         System.err.println("Error: Unknown request type.");
@@ -145,39 +145,39 @@ private String processData() {
     }
 }
 
-    private String getReview(String productID) throws IOException {
-    try {
-        String reviewUrl = "https://tiki.vn/api/v2/reviews?product_id=" + productID;
-        Document reviewDoc = Jsoup.connect(reviewUrl)
-                .method(Connection.Method.GET)
-                .ignoreContentType(true)
-                .execute()
-                .parse();
-        JSONObject reviewData = new JSONObject(reviewDoc.text());
-        String responseText = reviewDoc.text();
-        System.out.println("Nội dung phản hồi từ API: " + responseText);
-        if (!reviewData.has("data") || reviewData.getJSONArray("data").isEmpty()) {
-            throw new NoDataException("Không có dữ liệu review.");
-        }
-
-        StringBuilder result = new StringBuilder();
-        JSONArray reviews = reviewData.getJSONArray("data");
-        int maxReviews = 10;
-        int reviewCount = Math.min(maxReviews, reviews.length());
-
-      
-
-        for (int i = 0; i < reviewCount; i++) {
-            JSONObject review = reviews.getJSONObject(i);
-            result.append("</br>- ").append(review.getString("content")).append("</br>");
-        }
-
-        return result.toString();
-    } catch (IOException e) {
-        e.printStackTrace();
-        return "Lỗi kết nối hoặc xử lý dữ liệu.";
-    }
-}
+//    private String getReview(String productID) throws IOException {
+//    try {
+//        String reviewUrl = "https://tiki.vn/api/v2/reviews?product_id=" + productID;
+//        Document reviewDoc = Jsoup.connect(reviewUrl)
+//                .method(Connection.Method.GET)
+//                .ignoreContentType(true)
+//                .execute()
+//                .parse();
+//        JSONObject reviewData = new JSONObject(reviewDoc.text());
+//        String responseText = reviewDoc.text();
+//        System.out.println("Nội dung phản hồi từ API: " + responseText);
+//        if (!reviewData.has("data") || reviewData.getJSONArray("data").isEmpty()) {
+//            throw new NoDataException("Không có dữ liệu review.");
+//        }
+//
+//        StringBuilder result = new StringBuilder();
+//        JSONArray reviews = reviewData.getJSONArray("data");
+//        int maxReviews = 10;
+//        int reviewCount = Math.min(maxReviews, reviews.length());
+//
+//      
+//
+//        for (int i = 0; i < reviewCount; i++) {
+//            JSONObject review = reviews.getJSONObject(i);
+//            result.append("</br>- ").append(review.getString("content")).append("</br>");
+//        }
+//
+//        return result.toString();
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//        return "Lỗi kết nối hoặc xử lý dữ liệu.";
+//    }
+//}
 
 // Custom exception class for no data
 class NoDataException extends RuntimeException {
