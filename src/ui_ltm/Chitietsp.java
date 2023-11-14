@@ -24,7 +24,7 @@ public class Chitietsp extends javax.swing.JFrame {
     private String selectedProductName;
     private String selectedProductPrice;
     private String selectedProductImageURL;
-
+    private String selectedProductID;
 
     /**
      * Creates new form Chitietsp
@@ -36,7 +36,7 @@ public class Chitietsp extends javax.swing.JFrame {
         ChartPanel chartPanel = new ChartPanel(chart);
         // Hiển thị thông tin sản phẩm trong giao diện của Chitietsp
         updateProductDetails();
-
+        
 //         Tạo biểu đồ
         
 
@@ -87,6 +87,8 @@ public class Chitietsp extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         bieuDoPanel = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         jPanel9.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -322,7 +324,7 @@ public class Chitietsp extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addComponent(jLabel5)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +341,7 @@ public class Chitietsp extends javax.swing.JFrame {
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(jLabelimage, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -351,20 +353,16 @@ public class Chitietsp extends javax.swing.JFrame {
         );
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tên sản phẩm: ");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Giá hiện tại: ");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("jLabel11");
         jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("jLabel12");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -387,7 +385,7 @@ public class Chitietsp extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,7 +401,7 @@ public class Chitietsp extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(309, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(51, 102, 255));
@@ -439,19 +437,34 @@ public class Chitietsp extends javax.swing.JFrame {
         );
         bieuDoPanelLayout.setVerticalGroup(
             bieuDoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 681, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel4.setText("jLabel4");
+        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bieuDoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,9 +474,13 @@ public class Chitietsp extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bieuDoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bieuDoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -504,33 +521,53 @@ public class Chitietsp extends javax.swing.JFrame {
         if (imageURL != null && !imageURL.isEmpty()) {
         selectedProductImageURL = imageURL;
         updateProductDetails(); // Gọi lại phương thức để cập nhật giao diện người dùng
-    }
-    }
-    
-
-   
-    
-    private void updateProductDetails() {
-            if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
-            // Cập nhật giao diện người dùng với thông tin sản phẩm nhận được
-            jLabel11.setText("<html>" + selectedProductName + "<br></html>");
-            jLabel12.setText(selectedProductPrice);
-
-            try {
-                ImageIcon imageIcon = new ImageIcon(new java.net.URL(selectedProductImageURL));
-                jLabelimage.setIcon(imageIcon);
-            } catch (java.net.MalformedURLException e) {
-                // Xử lý khi URL không đúng định dạng
-                System.err.println("URL hình ảnh không hợp lệ: " + selectedProductImageURL);
-                e.printStackTrace();
-            } catch (Exception e) {
-                // Xử lý ngoại lệ chung
-                System.err.println("Không thể tải hình ảnh từ URL: " + selectedProductImageURL);
-                e.printStackTrace();
-            }
         }
-            
     }
+
+        
+    public void setSelectedProductID(String productID) {
+        this.selectedProductID = productID;
+        updateProductDetails();
+    }
+    public String getReview(String productID) {
+            String dataReview = TikiTrackPriceClient.handleListProduct("GetReview", productID);
+             System.err.println(dataReview);
+//           jLabel4.setText(dataReview);
+             
+             return dataReview ;      
+    }
+   public void setReview(String review) {
+        // Set the review data in your Chitietsp UI components.
+        // For example, you might have a JLabel to display the review text.
+        jLabel4.setText(review);
+    }
+    
+private void updateProductDetails() {
+    if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
+        // Cập nhật giao diện người dùng với thông tin sản phẩm nhận được
+        jLabel11.setText("<html>" + selectedProductName + "<br></html>");
+        jLabel12.setText(selectedProductPrice);
+
+        try {
+            ImageIcon imageIcon = new ImageIcon(new java.net.URL(selectedProductImageURL));
+            jLabelimage.setIcon(imageIcon);
+
+            // Get and display review information in jLabel4
+            String review = getReview(selectedProductID); // Assuming selectedProductID is available
+            jLabel4.setText(review);
+
+        } catch (java.net.MalformedURLException e) {
+            // Xử lý khi URL không đúng định dạng
+            System.err.println("URL hình ảnh không hợp lệ: " + selectedProductImageURL);
+            e.printStackTrace();
+        } catch (Exception e) {
+            // Xử lý ngoại lệ chung
+            System.err.println("Không thể tải hình ảnh từ URL: " + selectedProductImageURL);
+            e.printStackTrace();
+        }
+    }
+}
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -573,6 +610,7 @@ public class Chitietsp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -589,6 +627,7 @@ public class Chitietsp extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;

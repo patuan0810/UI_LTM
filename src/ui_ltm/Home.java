@@ -533,6 +533,33 @@ private boolean isFuzzyMatch(String rowText, String searchText) {
 
     return searchTextIndex == searchText.length();
 }
+public String getReview(String productID) {
+    try {
+        String dataReview = TikiTrackPriceClient.handleListProduct("GetReview", productID);
+
+        // Print the data for debugging
+        System.out.println("Data Review: " + dataReview);
+
+        // Check if the data starts with '{' before creating a JSONObject
+        if (dataReview.startsWith("{")) {
+            JSONObject jsonObject = new JSONObject(dataReview);
+
+            // Assuming "dataReview" is a JSONArray inside the JSONObject
+            JSONArray dataReviewArray = jsonObject.getJSONArray("dataReview");
+
+            // Your existing code to process the JSON data
+            System.err.println(dataReviewArray);
+            return dataReviewArray.toString();
+        } else {
+            // Handle non-JSON response, e.g., print an error message or throw an exception
+            System.err.println("Invalid JSON format in dataReview");
+            return "Invalid JSON format in dataReview";
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "Error processing dataReview: " + e.getMessage();
+    }
+}
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
         
@@ -550,29 +577,23 @@ private boolean isFuzzyMatch(String rowText, String searchText) {
 //            String imageURL = (String) table.getValueAt(selectedRow, 1);
             String tableName = table.getName();
 //            System.out.println(stt + "\n" + name + "\n" + table.getName());
-
-            int columnCount = table.getColumnCount();
-            System.out.println("Số lượng cột trong bảng là: " + columnCount);
-            Object[] rowData = new Object[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                rowData[i] = table.getValueAt(selectedRow, i);
-            }
-            System.out.println(Arrays.toString(rowData));
-            
+ 
             String productID = getProductID(tableName, stt);
             String lastestPrice = getLastestPrice(productID);
             String imageURL = getImageURL(tableName, stt);
             String listPriceAndDate = getListPrice(productID);
-
+            String review = getReview(productID); 
             System.out.println("ID: " + productID + "\n name: " + name +  "\n Gia:" + lastestPrice + "\n Anh: " + imageURL);
             // Chuyển thông tin sản phẩm được chọn đến Chitietsp
             Chitietsp chitietsp = new Chitietsp(listPriceAndDate);
+            
             chitietsp.setSelectedProductName(name);
             chitietsp.setSelectedProductPrice(lastestPrice);
             chitietsp.setSelectedProductImageURL(imageURL);
-//            chitietsp.sendDataChart(listPriceAndDate);
+            chitietsp.setSelectedProductID(productID);
+            chitietsp.setReview(review);  // Set the review data in Chitietsp
             chitietsp.setVisible(true);
-        }
+        } 
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -677,25 +698,39 @@ private boolean isFuzzyMatch(String rowText, String searchText) {
         return productID;
     }
     
-        public String getLastestPrice(String productID) {
+    public String getLastestPrice(String productID) {
+        try {
             String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
-            
-            // Parse JSON response to extract the price
-            JSONObject jsonObject = new JSONObject(listPriceAndDate);
-            JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");
 
-            System.out.println("price and date: " + listPriceAndDate);
-            // Lấy giá từ lần tìm kiếm gần nhất (ở cuối danh sách)
-            if (priceAndDateArray.length() > 0) {
-                JSONObject latestPrice = priceAndDateArray.getJSONObject(priceAndDateArray.length() - 1);
-                double price = latestPrice.getDouble("price");
+            // Check if the data starts with '{' before creating a JSONObject
+            if (listPriceAndDate.startsWith("{")) {
+                // Parse JSON response to extract the price
+                JSONObject jsonObject = new JSONObject(listPriceAndDate);
+                JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");
 
-                DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
-                return decimalFormat.format(price) + " VND";
+                System.out.println("price and date: " + listPriceAndDate);
+
+                // Lấy giá từ lần tìm kiếm gần nhất (ở cuối danh sách)
+                if (priceAndDateArray.length() > 0) {
+                    JSONObject latestPrice = priceAndDateArray.getJSONObject(priceAndDateArray.length() - 1);
+                    double price = latestPrice.getDouble("price");
+
+                    DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+                    return decimalFormat.format(price) + " VND";
+                } else {
+                    return "N/A";
+                }
             } else {
+                // Handle the case when the data is not in JSON format
+                System.err.println("Invalid JSON format in listPriceAndDate");
                 return "N/A";
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "Error parsing JSON for latest price";
         }
+    }
+
     
         public String getImageURL(String tableName, int stt) {
         String listProduct = "";
@@ -735,14 +770,27 @@ private boolean isFuzzyMatch(String rowText, String searchText) {
         return imageURL;
     }
         
-        public String getListPrice(String productID) {
-            String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
-            
-            // Parse JSON response to extract the price
-            JSONObject jsonObject = new JSONObject(listPriceAndDate);
-            JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");          
-           return priceAndDateArray.toString();
+            public String getListPrice(String productID) {
+            try {
+                String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
+
+                // Check if the data starts with '{' before creating a JSONObject
+                if (listPriceAndDate.startsWith("{")) {
+                    // Parse JSON response to extract the price
+                    JSONObject jsonObject = new JSONObject(listPriceAndDate);
+                    JSONArray priceAndDateArray = jsonObject.getJSONArray("ListPriceAndDate");
+                    return priceAndDateArray.toString();
+                } else {
+                    // Handle the case when the data is not in JSON format
+                    System.err.println("Invalid JSON format in listPriceAndDate");
+                    return "N/A";
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return "Error parsing JSON for list price";
+            }
         }
+
   
         
 //        public String getListPriceAndDate(String productID) {

@@ -11,8 +11,11 @@ package server;
 import org.json.JSONObject;
 import java.io.*;
 import java.net.Socket;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class Worker implements Runnable { //triển khai các phương thức có trong Runnable, cụ thể là phương thức run()
     private Socket socket;
@@ -27,7 +30,7 @@ public class Worker implements Runnable { //triển khai các phương thức c�
         System.out.println("Client " + socket.toString() + " accepted");
 
         try {
-            
+            postIP();
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             String dataSend = "";
@@ -51,7 +54,22 @@ public class Worker implements Runnable { //triển khai các phương thức c�
         }
 
     }
-    
+    public void postIP() {
+        try {
+            Socket socketGetIP = new Socket("google.com", 443);
+            String localIP = socketGetIP.getLocalAddress().toString().substring(1);
+            String api = "https://retoolapi.dev/lyMHm1/data/1/"; // Ghi vào dòng 1 trong DB
+            String jsonData = "{\"ip\":\"" + localIP + "\"}";
+            Jsoup.connect(api)
+                    .ignoreContentType(true).ignoreHttpErrors(true)
+                    .header("Content-Type", "application/json")
+                    .requestBody(jsonData)
+                    .method(Connection.Method.PUT).execute();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        
+    }
 
     public String sendDataClient(String dataSend) {
         try {
@@ -70,38 +88,104 @@ public class Worker implements Runnable { //triển khai các phương thức c�
 
     }
 
-    private String processData() {
-        try {
-            String dataReceive = in.readLine();
-            JSONObject jsReceive = new JSONObject(dataReceive);
-            String request = jsReceive.getString("request");
-            String data = jsReceive.getString("data");
-            String dataSend = "";
-//            System.out.println("test " + data );
-            switch (request)
-            {
-                case "GetListProduct":
-                    dataSend = getListProduct(data);
-                    break;
-                case "GetListPriceAndDate":
-                    dataSend = getListPriceAndDate(data);
-                    break;
-//                case "GetImageURL":
-//                    dataSend = getImageURL(data);
-//                    break;
+private String processData() {
+    try {
+        String dataReceive = in.readLine();
 
-                default:
-//                    return input[0];
-            }
-            
-            return dataSend;
-        } catch (IOException e) {
-            System.out.println(e);
-            return "Đã có lỗi xử lí dữ liệu";
+        // Check if the received data is not null or empty
+        if (dataReceive == null || dataReceive.isEmpty()) {
+            System.err.println("Error: Received data is null or empty.");
+            return "Error: Received data is null or empty.";
         }
 
-        
+        JSONObject jsReceive = new JSONObject(dataReceive);
+
+        // Check if the "request" key is present
+        if (jsReceive.has("request")) {
+            String request = jsReceive.getString("request");
+
+            // Check if the "data" key is present
+            if (jsReceive.has("data")) {
+                String data = jsReceive.getString("data");
+                String dataSend = "";
+
+                switch (request) {
+                    case "GetListProduct":
+                        dataSend = getListProduct(data);
+                        break;
+                    case "GetListPriceAndDate":
+                        dataSend = getListPriceAndDate(data);
+                        break;
+                    case "GetReview":
+                        dataSend = getReview(data);
+                        break;
+                    default:
+                        // Handle unknown request
+                        System.err.println("Error: Unknown request type.");
+                        return "Error: Unknown request type.";
+                }
+
+                return dataSend;
+            } else {
+                // Handle the case when "data" key is missing
+                System.err.println("Error: 'data' key not found in the received JSON.");
+                return "Error: 'data' key not found in the received JSON.";
+            }
+        } else {
+            // Handle the case when "request" key is missing
+            System.err.println("Error: 'request' key not found in the received JSON.");
+            return "Error: 'request' key not found in the received JSON.";
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        return "Error: Failed to read data from input stream.";
+    } catch (JSONException e) {
+        e.printStackTrace();
+        return "Error: Failed to parse JSON data.";
     }
+}
+
+    private String getReview(String productID) throws IOException {
+    try {
+        String reviewUrl = "https://tiki.vn/api/v2/reviews?product_id=" + productID;
+        Document reviewDoc = Jsoup.connect(reviewUrl)
+                .method(Connection.Method.GET)
+                .ignoreContentType(true)
+                .execute()
+                .parse();
+        JSONObject reviewData = new JSONObject(reviewDoc.text());
+        String responseText = reviewDoc.text();
+        System.out.println("Nội dung phản hồi từ API: " + responseText);
+        if (!reviewData.has("data") || reviewData.getJSONArray("data").isEmpty()) {
+            throw new NoDataException("Không có dữ liệu review.");
+        }
+
+        StringBuilder result = new StringBuilder();
+        JSONArray reviews = reviewData.getJSONArray("data");
+        int maxReviews = 10;
+        int reviewCount = Math.min(maxReviews, reviews.length());
+
+      
+
+        for (int i = 0; i < reviewCount; i++) {
+            JSONObject review = reviews.getJSONObject(i);
+            result.append("</br>- ").append(review.getString("content")).append("</br>");
+        }
+
+        return result.toString();
+    } catch (IOException e) {
+        e.printStackTrace();
+        return "Lỗi kết nối hoặc xử lý dữ liệu.";
+    }
+}
+
+// Custom exception class for no data
+class NoDataException extends RuntimeException {
+    public NoDataException(String message) {
+        super(message);
+    }
+}
+
     private String getListProduct(String categoryID) {
         return ConnectDB.getListProduct(categoryID);
     }
