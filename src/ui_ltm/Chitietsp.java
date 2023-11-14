@@ -529,18 +529,18 @@ public class Chitietsp extends javax.swing.JFrame {
         this.selectedProductID = productID;
         updateProductDetails();
     }
-    public String getReview(String productID) {
-            String dataReview = TikiTrackPriceClient.handleListProduct("GetReview", productID);
-             System.err.println(dataReview);
-//           jLabel4.setText(dataReview);
-             
-             return dataReview ;      
-    }
-   public void setReview(String review) {
-        // Set the review data in your Chitietsp UI components.
-        // For example, you might have a JLabel to display the review text.
-        jLabel4.setText(review);
-    }
+//    public String getReview(String productID) {
+//            String dataReview = TikiTrackPriceClient.handleListProduct("GetReview", productID);
+//             System.err.println(dataReview);
+////           jLabel4.setText(dataReview);
+//             
+//             return dataReview ;      
+//    }
+//   public void setReview(String review) {
+//        // Set the review data in your Chitietsp UI components.
+//        // For example, you might have a JLabel to display the review text.
+//        jLabel4.setText(review);
+//    }
     
 private void updateProductDetails() {
     if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
@@ -553,8 +553,8 @@ private void updateProductDetails() {
             jLabelimage.setIcon(imageIcon);
 
             // Get and display review information in jLabel4
-            String review = getReview(selectedProductID); // Assuming selectedProductID is available
-            jLabel4.setText(review);
+//            String review = getReview(selectedProductID); // Assuming selectedProductID is available
+//            jLabel4.setText(review);
 
         } catch (java.net.MalformedURLException e) {
             // Xử lý khi URL không đúng định dạng
