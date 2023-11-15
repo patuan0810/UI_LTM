@@ -97,8 +97,9 @@ public class Chitietsp extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         bieuDoPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         jPanel9.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -296,7 +297,6 @@ public class Chitietsp extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -413,7 +413,7 @@ public class Chitietsp extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(51, 102, 255));
@@ -454,13 +454,13 @@ public class Chitietsp extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("jLabel4");
-        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
         jLabel13.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Dưới đây là tất cả review của sản phẩm:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane3.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -469,18 +469,19 @@ public class Chitietsp extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -517,7 +518,9 @@ public class Chitietsp extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -558,30 +561,28 @@ public class Chitietsp extends javax.swing.JFrame {
     
     private String getReviewInformation(String productID) {
     try {
-            String reviewUrl = "https://tiki.vn/api/v2/reviews?product_id=" + productID;
-            Document reviewDoc = Jsoup.connect(reviewUrl)
-                    .method(Connection.Method.GET)
-                    .ignoreContentType(true)
-                    .execute()
-                    .parse();
-            JSONObject reviewData = new JSONObject(reviewDoc.text());
+        System.out.println(productID);
+        String reviewUrl = "https://tiki.vn/api/v2/reviews?product_id=" + productID;
+        Document reviewDoc = Jsoup.connect(reviewUrl)
+                .method(Connection.Method.GET)
+                .ignoreContentType(true)
+                .execute()
+                .parse();
+        JSONObject reviewData = new JSONObject(reviewDoc.text());
 
-            JSONArray reviews = reviewData.getJSONArray("data");
-            StringBuilder reviewInfo = new StringBuilder(" ");
-            for (int i = 0; i < reviews.length(); i++) {
-                JSONObject review = reviews.getJSONObject(i);
-                reviewInfo.append(" ").append(review.getString("content")).append("\n <br>");
-            }
-
-            return reviewInfo.toString();
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Lỗi kết nối hoặc xử lý.";
+        JSONArray reviews = reviewData.getJSONArray("data");
+        StringBuilder reviewInfo = new StringBuilder(" ");
+        for (int i = 0; i < reviews.length(); i++) {
+            JSONObject review = reviews.getJSONObject(i);
+            reviewInfo.append(" ").append(review.getString("content")).append("\n");
         }
+         System.out.println(reviewInfo);
+        return reviewInfo.toString();
+    } catch (IOException e) {
+        e.printStackTrace();
+        return "Lỗi kết nối hoặc xử lý.";
     }
+}
     
 private void updateProductDetails() {
     if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
@@ -593,7 +594,8 @@ private void updateProductDetails() {
             ImageIcon imageIcon = new ImageIcon(new java.net.URL(selectedProductImageURL));
             jLabelimage.setIcon(imageIcon);
             
-            jLabel4.setText("<html>" + getReviewInformation(selectedProductID) + "<br></html>"); 
+//            jTextArea1.setText("<html>" + getReviewInformation(selectedProductID) + "<br></html>"); 
+               jTextArea1.setText(getReviewInformation(selectedProductID)); 
 
         } catch (java.net.MalformedURLException e) {
             // Xử lý khi URL không đúng định dạng
@@ -650,7 +652,6 @@ private void updateProductDetails() {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -674,6 +675,8 @@ private void updateProductDetails() {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
