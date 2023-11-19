@@ -98,6 +98,8 @@ private String processData() {
             return "Error: Received data is null or empty.";
         }
 
+        System.out.println("Received data: " + dataReceive); // Add this line for debugging
+
         JSONObject jsReceive = new JSONObject(dataReceive);
 
         // Check if the "request" key is present
@@ -116,12 +118,12 @@ private String processData() {
                     case "GetListPriceAndDate":
                         dataSend = getListPriceAndDate(data);
                         break;
-//                    case "GetReview":
-//                        dataSend = getReview(data);
-//                        break;
+                    case "GetAll":
+                        dataSend = getAll();
+                        break;
                     default:
                         // Handle unknown request
-                        System.err.println("Error: Unknown request type.");
+                        System.err.println("Error: Unknown request type - " + request);
                         return "Error: Unknown request type.";
                 }
 
@@ -141,9 +143,11 @@ private String processData() {
         return "Error: Failed to read data from input stream.";
     } catch (JSONException e) {
         e.printStackTrace();
-        return "Error: Failed to parse JSON data.";
+        return "Error: Failed to parse JSON data. Received data: " ;
     }
 }
+
+
 
 //    private String getReview(String productID) throws IOException {
 //    try {
@@ -193,7 +197,11 @@ class NoDataException extends RuntimeException {
     private String getListPriceAndDate(String productID) {
         return ConnectDB.getListPriceAndDate(productID);
     }
-    
+      private String getAll() {
+          
+        return ConnectDB.getAllProducts();
+        
+    }
     
     private void closeSocket()      {
         try {

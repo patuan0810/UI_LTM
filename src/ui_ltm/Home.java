@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.text.DecimalFormat;
+import java.text.Normalizer;
 import org.json.JSONException;
 import java.util.Arrays;
 import javax.swing.RowFilter;
@@ -37,6 +38,7 @@ public class Home extends javax.swing.JFrame {
     private static String dataBaloVaVali = "";
     private static String dataTuiThoiTrangNam = "";
     private static String dataGiayDepNam = "";
+    private static String dataAllProducts = ""; 
     private String selectedProductID;
     
     public Home() {
@@ -61,6 +63,8 @@ public class Home extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         listSanPham = new javax.swing.JTabbedPane();
+        AllScrollPane = new javax.swing.JScrollPane();
+        allTable1 = new javax.swing.JTable();
         nhaSachTikiScrollPane = new javax.swing.JScrollPane();
         nhaSachTikiTable = new javax.swing.JTable();
         nhaCuaDoiSongScrollPane = new javax.swing.JScrollPane();
@@ -158,6 +162,39 @@ public class Home extends javax.swing.JFrame {
         );
 
         listSanPham.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        allTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Sản phẩm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        allTable1.setName("all"); // NOI18N
+        AllScrollPane.setViewportView(allTable1);
+        if (allTable1.getColumnModel().getColumnCount() > 0) {
+            allTable1.getColumnModel().getColumn(0).setMinWidth(40);
+            allTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
+            allTable1.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        listSanPham.addTab("Tất cả", AllScrollPane);
 
         nhaSachTikiTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -524,17 +561,49 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
-    private boolean isFuzzyMatch(String rowText, String searchText) {
-        // Perform a simple fuzzy match
+ private static boolean isFuzzyMatch(String rowText, String searchText) {
+        // Normalize both strings to remove accents and diacritics
+        String normalizedRowText = normalizeText(rowText);
+        String normalizedSearchText = normalizeText(searchText);
+
         int searchTextIndex = 0;
-        for (int i = 0; i < rowText.length(); i++) {
-            if (searchTextIndex < searchText.length() && rowText.charAt(i) == searchText.charAt(searchTextIndex)) {
-                searchTextIndex++;
-            }
+        int searchTextLength = normalizedSearchText.length();
+
+        // Check if searchText is empty
+        if (searchTextLength == 0) {
+            return true;
         }
 
-        return searchTextIndex == searchText.length();
+        int i = 0;
+
+        while (i < normalizedRowText.length() && searchTextIndex < searchTextLength) {
+            if (normalizedRowText.charAt(i) == normalizedSearchText.charAt(searchTextIndex)) {
+                searchTextIndex++;
+            } else {
+                // If current characters do not match, reset searchTextIndex
+                searchTextIndex = 0;
+
+                // Check if the current character is the start of a potential match
+                if (normalizedRowText.charAt(i) == normalizedSearchText.charAt(0)) {
+                    searchTextIndex = 1;
+                }
+            }
+
+            i++;
+        }
+
+        return searchTextIndex == searchTextLength;
     }
+
+    private static String normalizeText(String text) {
+        return Normalizer.normalize(text, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+                .toLowerCase();
+    }
+
+
+
+
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
         
@@ -573,55 +642,81 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
    
     
-    public static void  handleDataTable(JTable table, String categoryID) {
-        
-        String dataReceive = TikiTrackPriceClient.handleListProduct("GetListProduct", categoryID);
-        switch(categoryID) {
-            case "nha-sach-tiki":
-                dataNhaSachTiki = dataReceive;
-                break; 
-            case "nha-cua-doi-song":
-                dataNhaCuaDoiSong = dataReceive;
-                break;  
-            case "may-anh":
-                dataMayAnh = dataReceive;
-                break;     
-            case "laptop-may-vi-tinh-linh-kien":
-                dataLaptopMayViTinhLinkKien = dataReceive;
-                break; 
-            case "dong-ho-va-trang-suc":
-                dataDongHoVaTrangSuc = dataReceive;
-                break;     
-            case "balo-va-vali":
-                dataBaloVaVali = dataReceive;
-                break;               
-            case "tui-thoi-trang-nam":
-                dataTuiThoiTrangNam = dataReceive;
-                break;                
-            case "giay-dep-nam":
-                dataGiayDepNam = dataReceive;
-                break;    
-        }
-        JSONObject jsReceive = new JSONObject(dataReceive);
-        JSONArray arrReceive = new JSONArray(jsReceive.getJSONArray("list product"));
-        DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+public static void handleDataTable(JTable table, String categoryID) {
+    String dataReceive = TikiTrackPriceClient.handleListProduct("GetListProduct", categoryID);
+    String dataAll = TikiTrackPriceClient.handleListProduct("GetAll", categoryID);
+
+    // Xử lý các trường hợp
+    switch (categoryID) {
+        case "all":
+            dataAllProducts = dataAll;
+          
+            populateTable((DefaultTableModel) table.getModel(), dataAll);
+            break;
+        case "nha-sach-tiki":
+            dataNhaSachTiki = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;
+        case "nha-cua-doi-song":
+            dataNhaCuaDoiSong = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;
+        case "may-anh":
+            dataMayAnh = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;     
+        case "laptop-may-vi-tinh-linh-kien":
+            dataLaptopMayViTinhLinkKien = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break; 
+        case "dong-ho-va-trang-suc":
+            dataDongHoVaTrangSuc = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;     
+        case "balo-va-vali":
+            dataBaloVaVali = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;               
+        case "tui-thoi-trang-nam":
+            dataTuiThoiTrangNam = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;                
+        case "giay-dep-nam":
+            dataGiayDepNam = dataReceive;
+            populateTable((DefaultTableModel) table.getModel(), dataReceive);
+            break;
+        default:
+            // Handle unknown category ID
+            break;
+    }  
+}
+public static void populateTable(DefaultTableModel tableModel, String jsonData) {
+    JSONObject jsData = new JSONObject(jsonData);
+
+    // Kiểm tra xem key "list product" có tồn tại không
+    if (jsData.has("list product")) {
+        JSONArray arrData = new JSONArray(jsData.getJSONArray("list product"));
+
+        // Xóa tất cả các hàng hiện tại trong bảng
         tableModel.setRowCount(0);
 
-        for (int i = 0; i < arrReceive.length(); i++) {
-            JSONObject contentReceive = arrReceive.getJSONObject(i);
+        // Thêm các hàng mới từ dữ liệu JSON
+        for (int i = 0; i < arrData.length(); i++) {
+            JSONObject contentData = arrData.getJSONObject(i);
             int stt = i + 1;
-            String name = contentReceive.getString("name");
-            String imageURL = contentReceive.getString("imageURL");
-            
-            tableModel.addRow(new Object[]{stt, name, imageURL});
-//            System.out.println("hiihh " + contentReceive.toString());
-        }
-        
-//            System.out.println("API Response for GetListProduct: " + dataReceive);
+            String name = contentData.getString("name");
+            String imageURL = contentData.getString("imageURL");
 
+            tableModel.addRow(new Object[]{stt, name, imageURL});
+        }
+    } else {
+        // Xử lý trường hợp key "list product" không tồn tại trong JSON
+        System.err.println("Key 'list product' not found in the JSON data.");
     }
-    
+}
+
     public void sendDataTable() {
+        handleDataTable(allTable1, "all");
         handleDataTable(nhaSachTikiTable, "nha-sach-tiki");
         handleDataTable(nhaCuaDoiSongTable, "nha-cua-doi-song");
         handleDataTable(mayAnhTable, "may-anh");
@@ -635,6 +730,9 @@ public class Home extends javax.swing.JFrame {
     public String getProductID(String tableName, int stt) {
         String listProduct = "";
         switch(tableName) {
+            case "all":
+                listProduct = dataAllProducts;
+                break; 
             case "nha-sach-tiki":
                 listProduct = dataNhaSachTiki;
                 break; 
@@ -712,6 +810,9 @@ public class Home extends javax.swing.JFrame {
         public String getImageURL(String tableName, int stt) {
         String listProduct = "";
         switch(tableName) {
+            case "all":
+                listProduct = dataAllProducts;
+                break; 
             case "nha-sach-tiki":
                 listProduct = dataNhaSachTiki;
                 break; 
@@ -804,6 +905,8 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane AllScrollPane;
+    private javax.swing.JTable allTable1;
     private javax.swing.JScrollPane baloVaValiScrollPane;
     private javax.swing.JTable baloVaValiTable;
     private javax.swing.JScrollPane dongHoVaTrangSucScrollPane;
@@ -826,6 +929,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane nhaCuaDoiSongScrollPane;
     private javax.swing.JTable nhaCuaDoiSongTable;
     private javax.swing.JScrollPane nhaSachTikiScrollPane;
+    private javax.swing.JScrollPane nhaSachTikiScrollPane1;
+    private javax.swing.JScrollPane nhaSachTikiScrollPane2;
     private javax.swing.JTable nhaSachTikiTable;
     private javax.swing.JButton theoDoiGiaButton;
     private javax.swing.JScrollPane tuiThoiTrangNamScrollPane;

@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
+import org.json.JSONException;
 
 public class ConnectDB {
 
@@ -43,33 +44,68 @@ public class ConnectDB {
 
     }
 
-        public static String getListProduct(String categoryID) {
-        JSONObject jsListProduct = new JSONObject();
-        try {
-            String sqlCategory = "SELECT ProductID, Name, ImageURL FROM product WHERE CategoryID = '" + categoryID + "' ORDER BY Name";
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sqlCategory);
+public static String getListProduct(String categoryID) {
+    JSONObject jsListProduct = new JSONObject();
+    try {
+        String sqlCategory = "SELECT ProductID, Name, ImageURL FROM product WHERE CategoryID = ? ORDER BY Name";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sqlCategory)) {
+            preparedStatement.setString(1, categoryID);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                JSONArray arrListProduct = new JSONArray();
+                while (rs.next()) {
+                    JSONObject contentListProduct = new JSONObject();
+                    String productID = rs.getString("ProductID");
 
-            JSONArray arrListProduct = new JSONArray();
-            while (rs.next()) {
-                JSONObject contentListProduct = new JSONObject();
-                String productID = rs.getString("ProductID");
+                    contentListProduct.put("productID", productID);
+                    contentListProduct.put("name", rs.getString("Name"));
+                    contentListProduct.put("imageURL", rs.getString("ImageURL"));
 
-                contentListProduct.put("productID", productID);
-                contentListProduct.put("name", rs.getString("Name"));
-                contentListProduct.put("imageURL", rs.getString("ImageURL"));
-
-                arrListProduct.put(contentListProduct);
+                    arrListProduct.put(contentListProduct);
+                }
+                jsListProduct.put("list product", arrListProduct);
             }
-            jsListProduct.put("list product", arrListProduct);
-            return jsListProduct.toString();
-        } catch (Exception e) {
-            jsListProduct.put("Error", "Đã có lỗi lấy dữ liệu tên sản phẩm.");
-            e.printStackTrace();
-            return jsListProduct.toString();
         }
+        return jsListProduct.toString();
+    } catch (SQLException | JSONException e) {
+        jsListProduct.put("Error", "Đã có lỗi lấy dữ liệu tên sản phẩm.");
+        e.printStackTrace();
+        return jsListProduct.toString();
     }
-    
+}
+
+
+public static String getAllProducts() {
+    JSONObject jsAllProducts = new JSONObject();
+    try {
+        String sqlAllProducts = "SELECT [ProductID], [Name], [ImageURL] FROM [TikiTrackPrice].[dbo].[product]";
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(sqlAllProducts);
+
+        JSONArray arrAllProducts = new JSONArray();
+        while (rs.next()) {
+            JSONObject contentAllProducts = new JSONObject();
+
+                     String productID = rs.getString("ProductID");
+
+                    contentAllProducts.put("productID", productID);
+                    contentAllProducts.put("name", rs.getString("Name"));
+                    contentAllProducts.put("imageURL", rs.getString("ImageURL"));
+
+            arrAllProducts.put(contentAllProducts);
+        }
+        jsAllProducts.put("list product", arrAllProducts);
+        return jsAllProducts.toString();
+    } catch (Exception e) {
+        jsAllProducts.put("Error", "Đã có lỗi lấy dữ liệu sản phẩm.");
+        e.printStackTrace();
+        return jsAllProducts.toString();
+    }
+}
+
+
+
+
+
     public static String getListPriceAndDate(String productID) {
             String sqlPriceAndDate = "Select Price, SearchDate from final_product_detail where ProductID=" + productID + " ORDER BY SearchDate";
             try {
