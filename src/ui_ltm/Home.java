@@ -643,8 +643,8 @@ public class Home extends javax.swing.JFrame {
    
     
 public static void handleDataTable(JTable table, String categoryID) {
-    String dataReceive = TikiTrackPriceClient.handleListProduct("GetListProduct", categoryID);
-    String dataAll = TikiTrackPriceClient.handleListProduct("GetAll", categoryID);
+    String dataReceive = TikiTrackPriceClient.sendRequestToServer("GetListProduct", categoryID);
+    String dataAll = TikiTrackPriceClient.sendRequestToServer("GetAll", categoryID);
 
     // Xử lý các trường hợp
     switch (categoryID) {
@@ -769,7 +769,7 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
     }
     
        public String getLastestPrice(String productID) {
-    String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
+    String listPriceAndDate = TikiTrackPriceClient.sendRequestToServer("GetListPriceAndDate", productID);
 
     try {
         // Kiểm tra xem dữ liệu nhận được có đúng định dạng JSON không
@@ -849,7 +849,7 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
     }
         
     public String getListPrice(String productID) {
-        String listPriceAndDate = TikiTrackPriceClient.handleListProduct("GetListPriceAndDate", productID);
+        String listPriceAndDate = TikiTrackPriceClient.sendRequestToServer("GetListPriceAndDate", productID);
 
         try {
             // Kiểm tra xem dữ liệu có đúng định dạng JSON không

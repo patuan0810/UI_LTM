@@ -49,7 +49,7 @@ public class TikiTrackPriceClient {
         
     }
     
-    public static String handleListProduct(String request, String data) {
+    public static String sendRequestToServer(String request, String data) {
         
         try {
             JSONObject jsDataSend = new JSONObject();
