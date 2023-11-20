@@ -893,7 +893,7 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
      */
     public static void main(String args[]) {
       TikiTrackPriceClient client = new TikiTrackPriceClient(4444);
-    
+     
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Home home = new Home();

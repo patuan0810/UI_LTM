@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui_ltm;
+import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,14 +14,17 @@ import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 /**
  *
@@ -41,9 +45,14 @@ public class chart extends javax.swing.JFrame {
         CategoryPlot plot = (CategoryPlot) barChart.getPlot();
         plot.getRenderer().setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         plot.getRenderer().setBaseItemLabelsVisible(true);
+        
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setItemLabelFont(new Font("Tahoma", Font.PLAIN, 11));
+        plot.getDomainAxis().setTickLabelFont(new Font("Tahoma", Font.PLAIN, 10));
         //Hiển thị giá trên cột
         return barChart;
     }
+   
 
 private static CategoryDataset createDataset(String data) {
     final DefaultCategoryDataset dataset = new DefaultCategoryDataset();

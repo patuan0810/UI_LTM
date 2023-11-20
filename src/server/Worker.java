@@ -22,19 +22,26 @@ public class Worker implements Runnable { //triển khai các phương thức c�
 
     private BufferedReader in;
     private BufferedWriter out;
+    private RSA_Server rsa_server;
+    private AES_Server aes_server;
+    
     public Worker(Socket s) {
         this.socket = s;
     }
 
     public void run() {
         System.out.println("Client " + socket.toString() + " accepted");
-
         try {
             postIP();
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            
+            String publicKeyRSA = getPublicKeyRSA();
+            sendPublicKeyRSAToClient(publicKeyRSA);
+            createAES();
+            
             String dataSend = "";
-            String isSendData = "";
+            String isSendData = "";    
             while (true) {
 
                 dataSend = processData();
@@ -70,13 +77,34 @@ public class Worker implements Runnable { //triển khai các phương thức c�
         }
         
     }
+    
+    private void createAES() {
+        try {
+            String input = in.readLine();
+            String keyAES = rsa_server.decrypt(input);
+            aes_server = new AES_Server(keyAES);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        
+        
+    }
+    
+    private void sendPublicKeyRSAToClient(String publicKey) {
+        try {
+            out.write(publicKey + "\n");
+            out.flush();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 
     public String sendDataClient(String dataSend) {
         try {
-            out.write(dataSend + "\n");
+            out.write(aes_server.encrypt(dataSend) + "\n");
             out.flush();
             return "true";
-        } catch (IOException e) {
+        } catch (Exception e) {
                 //Kiểm tra xem có phải la lỗi kết nối socket ở phía client không
             if (e.getMessage().contains("Connection reset") || e.getMessage().contains("Connection reset by peer")) {
                 return "The client has closed the socket!";
@@ -84,13 +112,11 @@ public class Worker implements Runnable { //triển khai các phương thức c�
             System.out.println(e);
             return "false";
         }
-
-
     }
 
 private String processData() {
     try {
-        String dataReceive = in.readLine();
+        String dataReceive = aes_server.decrypt(in.readLine());
 
         // Check if the received data is not null or empty
         if (dataReceive == null || dataReceive.isEmpty()) {
@@ -138,12 +164,9 @@ private String processData() {
             System.err.println("Error: 'request' key not found in the received JSON.");
             return "Error: 'request' key not found in the received JSON.";
         }
-    } catch (IOException e) {
+    } catch (Exception e) {
         e.printStackTrace();
         return "Error: Failed to read data from input stream.";
-    } catch (JSONException e) {
-        e.printStackTrace();
-        return "Error: Failed to parse JSON data. Received data: " ;
     }
 }
 
@@ -197,12 +220,15 @@ class NoDataException extends RuntimeException {
     private String getListPriceAndDate(String productID) {
         return ConnectDB.getListPriceAndDate(productID);
     }
-      private String getAll() {
-          
+    
+    private String getAll() {
         return ConnectDB.getAllProducts();
-        
     }
     
+    private String getPublicKeyRSA() {
+        rsa_server = new RSA_Server();
+        return rsa_server.getPublicKey();
+    }
     private void closeSocket()      {
         try {
             in.close();
