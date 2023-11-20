@@ -100,6 +100,7 @@ public class Chitietsp extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
 
         jPanel9.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -363,11 +364,9 @@ public class Chitietsp extends javax.swing.JFrame {
         );
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tên sản phẩm: ");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Giá hiện tại: ");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -456,11 +455,15 @@ public class Chitietsp extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("Dưới đây là tất cả review của sản phẩm:");
+        jLabel13.setText("jLabel13");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Dưới đây là các review về sản phẩm trên Tiki :");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -469,19 +472,22 @@ public class Chitietsp extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -520,7 +526,7 @@ public class Chitietsp extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
@@ -559,6 +565,29 @@ public class Chitietsp extends javax.swing.JFrame {
         updateProductDetails();
     }
     
+    private String getReviewInformation_1(String productID) {
+    try {
+        System.out.println("1" + productID);
+        String productin4 = "https://tiki.vn/api/v2/products/" + productID;
+
+            Document doc = Jsoup.connect(productin4)
+                    .method(Connection.Method.GET)
+                    .ignoreContentType(true)
+                    .execute()
+                    .parse();
+            JSONObject apiData = new JSONObject(doc.text());
+           
+
+        String productinfo = "Sản phẩm có review với điểm trung bình là: " + apiData.get("rating_average");
+        
+       
+        return productinfo;
+    } catch (IOException e) {
+        e.printStackTrace();
+        return "Lỗi kết nối hoặc xử lý.";
+    }
+    }
+    
     private String getReviewInformation(String productID) {
     try {
         System.out.println(productID);
@@ -571,43 +600,43 @@ public class Chitietsp extends javax.swing.JFrame {
         JSONObject reviewData = new JSONObject(reviewDoc.text());
 
         JSONArray reviews = reviewData.getJSONArray("data");
-        StringBuilder reviewInfo = new StringBuilder(" ");
+        StringBuilder reviewInfo = new StringBuilder();
         for (int i = 0; i < reviews.length(); i++) {
             JSONObject review = reviews.getJSONObject(i);
-            reviewInfo.append(" ").append(review.getString("content")).append("\n");
+            reviewInfo.append(" - ").append(review.getString("content")).append("\n\n");
         }
-         System.out.println(reviewInfo);
-        return reviewInfo.toString();
+        System.out.println(reviewInfo);
+        return  reviewInfo.toString();
     } catch (IOException e) {
         e.printStackTrace();
         return "Lỗi kết nối hoặc xử lý.";
     }
-}
+    }
     
-private void updateProductDetails() {
-    if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
-        // Cập nhật giao diện người dùng với thông tin sản phẩm nhận được
-        jLabel11.setText("<html>" + selectedProductName + "<br></html>");
-        jLabel12.setText(selectedProductPrice);
+    private void updateProductDetails() {
+        if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
+            // Cập nhật giao diện người dùng với thông tin sản phẩm nhận được
+            jLabel11.setText("<html>" + selectedProductName + "<br></html>");
+            jLabel12.setText(selectedProductPrice);
 
-        try {
-            ImageIcon imageIcon = new ImageIcon(new java.net.URL(selectedProductImageURL));
-            jLabelimage.setIcon(imageIcon);
-            
-//            jTextArea1.setText("<html>" + getReviewInformation(selectedProductID) + "<br></html>"); 
-               jTextArea1.setText(getReviewInformation(selectedProductID)); 
+            try {
+                ImageIcon imageIcon = new ImageIcon(new java.net.URL(selectedProductImageURL));
+                jLabelimage.setIcon(imageIcon);
 
-        } catch (java.net.MalformedURLException e) {
-            // Xử lý khi URL không đúng định dạng
-            System.err.println("URL hình ảnh không hợp lệ: " + selectedProductImageURL);
-            e.printStackTrace();
-        } catch (Exception e) {
-            // Xử lý ngoại lệ chung
-            System.err.println("Không thể tải hình ảnh từ URL: " + selectedProductImageURL);
-            e.printStackTrace();
+                jLabel13.setText(getReviewInformation_1(selectedProductID));
+                jTextArea1.setText(getReviewInformation(selectedProductID));
+
+            } catch (java.net.MalformedURLException e) {
+                // Xử lý khi URL không đúng định dạng
+                System.err.println("URL hình ảnh không hợp lệ: " + selectedProductImageURL);
+                e.printStackTrace();
+            } catch (Exception e) {
+                // Xử lý ngoại lệ chung
+                System.err.println("Không thể tải hình ảnh từ URL: " + selectedProductImageURL);
+                e.printStackTrace();
+            }
         }
     }
-}
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -652,6 +681,7 @@ private void updateProductDetails() {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
