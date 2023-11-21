@@ -60,6 +60,7 @@ public class Home extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         listSanPham = new javax.swing.JTabbedPane();
@@ -97,9 +98,9 @@ public class Home extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(321, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,21 +124,32 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(0, 0, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Làm mới");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jTextField2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 1082, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel5.setBackground(new java.awt.Color(51, 102, 255));
@@ -483,13 +495,13 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(listSanPham)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -527,39 +539,37 @@ public class Home extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String searchText = jTextField2.getText().trim();
-        performSearch(searchText);
+         int selectedTabIndex = listSanPham.getSelectedIndex();
+        performSearch(searchText, selectedTabIndex);
     }//GEN-LAST:event_jButton1ActionPerformed
-    private void performSearch(String searchText) {
-        TableRowSorter<TableModel> sorter;
+    private void performSearch(String searchText, int selectedTabIndex) {
+    // Get the selected tab
+    Component tabComponent = listSanPham.getComponentAt(selectedTabIndex);
+    JScrollPane scrollPane = (JScrollPane) tabComponent;
+    JViewport viewport = scrollPane.getViewport();
+    JTable table = (JTable) viewport.getView();
 
-        // Iterate through all tables and apply the search filter
-        for (int i = 0; i < listSanPham.getTabCount(); i++) {
-            Component tabComponent = listSanPham.getComponentAt(i);
-            JScrollPane scrollPane = (JScrollPane) tabComponent;
-            JViewport viewport = scrollPane.getViewport();
-            JTable table = (JTable) viewport.getView();
+    TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+    table.setRowSorter(sorter);
 
-            sorter = new TableRowSorter<>(table.getModel());
-            table.setRowSorter(sorter);
+    sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
+        @Override
+        public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
+            int modelRow = entry.getIdentifier();
+            int viewRow = table.convertRowIndexToView(modelRow);
 
-            sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
-                @Override
-                public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
-                    int modelRow = entry.getIdentifier();
-                    int viewRow = table.convertRowIndexToView(modelRow);
+            // Get the text content of the row
+            StringBuilder rowText = new StringBuilder();
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                rowText.append(table.getValueAt(modelRow, col)).append(" ");
+            }
 
-                    // Get the text content of the row
-                    StringBuilder rowText = new StringBuilder();
-                    for (int col = 0; col < table.getColumnCount(); col++) {
-                        rowText.append(table.getValueAt(modelRow, col)).append(" ");
-                    }
-
-                    // Perform a simple fuzzy match
-                    return isFuzzyMatch(rowText.toString().toLowerCase(), searchText.toLowerCase());
-                }
-            });
+            // Perform a simple fuzzy match
+            return isFuzzyMatch(rowText.toString().toLowerCase(), searchText.toLowerCase());
         }
-    }
+    });
+}
+
 
  private static boolean isFuzzyMatch(String rowText, String searchText) {
         // Normalize both strings to remove accents and diacritics
@@ -640,6 +650,12 @@ public class Home extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      String searchText = "";
+         int selectedTabIndex = listSanPham.getSelectedIndex();
+        performSearch(searchText, selectedTabIndex);
+    }//GEN-LAST:event_jButton2ActionPerformed
    
     
 public static void handleDataTable(JTable table, String categoryID) {
@@ -914,6 +930,7 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
     private javax.swing.JScrollPane giayDepNamScrollPane;
     private javax.swing.JTable giayDepNamTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -929,8 +946,6 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
     private javax.swing.JScrollPane nhaCuaDoiSongScrollPane;
     private javax.swing.JTable nhaCuaDoiSongTable;
     private javax.swing.JScrollPane nhaSachTikiScrollPane;
-    private javax.swing.JScrollPane nhaSachTikiScrollPane1;
-    private javax.swing.JScrollPane nhaSachTikiScrollPane2;
     private javax.swing.JTable nhaSachTikiTable;
     private javax.swing.JButton theoDoiGiaButton;
     private javax.swing.JScrollPane tuiThoiTrangNamScrollPane;
