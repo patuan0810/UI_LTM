@@ -567,7 +567,7 @@ public class Chitietsp extends javax.swing.JFrame {
     
     private String getReviewInformation_1(String productID) {
     try {
-        System.out.println("1" + productID);
+        System.out.println("1 " + productID);
         String productin4 = "https://tiki.vn/api/v2/products/" + productID;
 
             Document doc = Jsoup.connect(productin4)
@@ -624,6 +624,9 @@ public class Chitietsp extends javax.swing.JFrame {
                 jLabelimage.setIcon(imageIcon);
 
                 jLabel13.setText(getReviewInformation_1(selectedProductID));
+                
+                jTextArea1.setEditable(false);
+                jTextArea1.setBorder(null);
                 jTextArea1.setText(getReviewInformation(selectedProductID));
 
             } catch (java.net.MalformedURLException e) {
