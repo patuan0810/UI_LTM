@@ -600,18 +600,38 @@ public class Chitietsp extends javax.swing.JFrame {
         JSONObject reviewData = new JSONObject(reviewDoc.text());
 
         JSONArray reviews = reviewData.getJSONArray("data");
+
+        // Kiểm tra nếu không có đánh giá
+        if (reviews.length() == 0) {
+            System.out.println("Không có đánh giá.");
+            return "Không có đánh giá.";
+        }
+
         StringBuilder reviewInfo = new StringBuilder();
         for (int i = 0; i < reviews.length(); i++) {
             JSONObject review = reviews.getJSONObject(i);
-            reviewInfo.append(" - ").append(review.getString("content")).append("\n\n");
+            String content = review.getString("content");
+
+            // Kiểm tra nếu đánh giá có nội dung trước khi thêm vào reviewInfo
+            if (!content.trim().isEmpty()) {
+                reviewInfo.append(" - ").append(content).append("\n\n");
+            }
         }
+
+        // Kiểm tra nếu không có đánh giá có nội dung
+        if (reviewInfo.length() == 0) {
+            System.out.println("Không có đánh giá có nội dung.");
+            return "Không có đánh giá có nội dung.";
+        }
+
         System.out.println(reviewInfo);
-        return  reviewInfo.toString();
+        return reviewInfo.toString();
     } catch (IOException e) {
         e.printStackTrace();
         return "Lỗi kết nối hoặc xử lý.";
     }
-    }
+}
+
     
     private void updateProductDetails() {
         if (selectedProductImageURL != null && !selectedProductImageURL.isEmpty()) {
