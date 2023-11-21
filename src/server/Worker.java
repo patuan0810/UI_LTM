@@ -145,7 +145,7 @@ private String processData() {
                         dataSend = getListPriceAndDate(data);
                         break;
                     case "GetAll":
-                        dataSend = getAll();
+                        dataSend = getAllProducts();
                         break;
                     default:
                         // Handle unknown request
@@ -221,7 +221,7 @@ class NoDataException extends RuntimeException {
         return ConnectDB.getListPriceAndDate(productID);
     }
     
-    private String getAll() {
+    private String getAllProducts() {
         return ConnectDB.getAllProducts();
     }
     

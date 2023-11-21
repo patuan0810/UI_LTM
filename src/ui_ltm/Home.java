@@ -58,8 +58,8 @@ public class Home extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        Searchbtn = new javax.swing.JButton();
+        textSearch = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         listSanPham = new javax.swing.JTabbedPane();
@@ -81,8 +81,9 @@ public class Home extends javax.swing.JFrame {
         tuiThoiTrangNamTable = new javax.swing.JTable();
         giayDepNamScrollPane = new javax.swing.JScrollPane();
         giayDepNamTable = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        Resetbtn = new javax.swing.JButton();
         theoDoiGiaButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,19 +110,19 @@ public class Home extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tìm kiếm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Searchbtn.setBackground(new java.awt.Color(0, 0, 255));
+        Searchbtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        Searchbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Searchbtn.setText("Tìm kiếm");
+        Searchbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                SearchbtnActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        textSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                textSearchActionPerformed(evt);
             }
         });
 
@@ -130,16 +131,16 @@ public class Home extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jTextField2)
+                .addComponent(textSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Searchbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Searchbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel5.setBackground(new java.awt.Color(51, 102, 255));
@@ -466,6 +467,17 @@ public class Home extends javax.swing.JFrame {
 
         listSanPham.addTab("Giày dép nam ", giayDepNamScrollPane);
 
+        Resetbtn.setBackground(new java.awt.Color(0, 102, 255));
+        Resetbtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        Resetbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Resetbtn.setText("Làm mới");
+        Resetbtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Resetbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetbtnActionPerformed(evt);
+            }
+        });
+
         theoDoiGiaButton.setBackground(new java.awt.Color(0, 102, 255));
         theoDoiGiaButton.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         theoDoiGiaButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -478,16 +490,26 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 102, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Làm mới");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(984, Short.MAX_VALUE)
+                .addComponent(Resetbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Resetbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -496,15 +518,11 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(listSanPham)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,11 +534,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(theoDoiGiaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -533,20 +549,18 @@ public class Home extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void SearchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchbtnActionPerformed
         // TODO add your handling code here:
-        String searchText = jTextField2.getText().trim();
+        String searchText = textSearch.getText().trim();
          int selectedTabIndex = listSanPham.getSelectedIndex();
         performSearch(searchText, selectedTabIndex);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_SearchbtnActionPerformed
     private void performSearch(String searchText, int selectedTabIndex) {
     // Get the selected tab
     Component tabComponent = listSanPham.getComponentAt(selectedTabIndex);
@@ -644,6 +658,7 @@ public class Home extends javax.swing.JFrame {
             chitietsp.setSelectedProductName((String) table.getValueAt(selectedRow, 1));
             chitietsp.setSelectedProductPrice(getLastestPrice(productID));
             chitietsp.setSelectedProductImageURL(getImageURL(tableName, stt));
+            chitietsp.setLocationRelativeTo(null);
             chitietsp.setVisible(true);
         } else {
             // Xử lý trường hợp productID không hợp lệ
@@ -652,15 +667,15 @@ public class Home extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void textSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_textSearchActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ResetbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetbtnActionPerformed
       String searchText = "";
          int selectedTabIndex = listSanPham.getSelectedIndex();
         performSearch(searchText, selectedTabIndex);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ResetbtnActionPerformed
    
     
 public static void handleDataTable(JTable table, String categoryID) {
@@ -918,6 +933,7 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Home home = new Home();
+                home.setLocationRelativeTo(null);
                 home.setVisible(true);
                 home.sendDataTable();
  
@@ -927,6 +943,8 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane AllScrollPane;
+    private javax.swing.JButton Resetbtn;
+    private javax.swing.JButton Searchbtn;
     private javax.swing.JTable allTable1;
     private javax.swing.JScrollPane baloVaValiScrollPane;
     private javax.swing.JTable baloVaValiTable;
@@ -934,15 +952,13 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
     private javax.swing.JTable dongHoVaTrangSucTable;
     private javax.swing.JScrollPane giayDepNamScrollPane;
     private javax.swing.JTable giayDepNamTable;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JScrollPane laptopMayViTinhLinhKienScrollPane;
     private javax.swing.JTable laptopMayViTinhLinhKienTable;
     private javax.swing.JTabbedPane listSanPham;
@@ -952,6 +968,7 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
     private javax.swing.JTable nhaCuaDoiSongTable;
     private javax.swing.JScrollPane nhaSachTikiScrollPane;
     private javax.swing.JTable nhaSachTikiTable;
+    private javax.swing.JTextField textSearch;
     private javax.swing.JButton theoDoiGiaButton;
     private javax.swing.JScrollPane tuiThoiTrangNamScrollPane;
     private javax.swing.JTable tuiThoiTrangNamTable;
