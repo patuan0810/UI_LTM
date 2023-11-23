@@ -5,7 +5,11 @@
  */
 package ui_ltm;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,7 +21,13 @@ import java.text.DecimalFormat;
 import java.text.Normalizer;
 import org.json.JSONException;
 import java.util.Arrays;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.RowFilter;
+import javax.swing.SwingWorker;
+import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
@@ -40,7 +50,11 @@ public class Home extends javax.swing.JFrame {
     private static String dataGiayDepNam = "";
     private static String dataAllProducts = ""; 
     private String selectedProductID;
+    private static JFrame loadingFrame;
+    private static JDialog loadingDialog;
+    private static Home home;
     
+   
     public Home() {
         initComponents();
     }
@@ -86,6 +100,9 @@ public class Home extends javax.swing.JFrame {
         theoDoiGiaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("HOMEFRAME"); // NOI18N
+
+        jPanel1.setName("homePanel"); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -635,7 +652,43 @@ public class Home extends javax.swing.JFrame {
 
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
-        
+                home.setEnabled(false);
+                showLoadingDialog(); 
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        showChiTietSP();
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        closeLoadingDialog();
+                        home.setEnabled(true);   
+                    }
+                };
+                worker.execute();
+    
+    }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
+
+    private static void showLoadingDialog() {
+        loadingDialog = new JDialog(loadingFrame, "Đang tải dữ liệu", Dialog.ModalityType.MODELESS);
+        JLabel label = new JLabel("Đang tải dữ liệu...");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        label.setBorder(border);
+        loadingDialog.add(label);
+        loadingDialog.setSize(180, 90);
+        loadingDialog.setLocationRelativeTo(null);
+        loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        loadingDialog.setUndecorated(true);
+        loadingDialog.setVisible(true);
+    }
+    private static void closeLoadingDialog() {
+        loadingDialog.dispose();
+    }
+
+    private void showChiTietSP() {
         int tabIndex = listSanPham.getSelectedIndex();
     Component tabComponent = listSanPham.getComponentAt(tabIndex);
     JScrollPane scrollPane = (JScrollPane) tabComponent;
@@ -660,12 +713,14 @@ public class Home extends javax.swing.JFrame {
             chitietsp.setSelectedProductImageURL(getImageURL(tableName, stt));
             chitietsp.setLocationRelativeTo(null);
             chitietsp.setVisible(true);
+             
+
         } else {
             // Xử lý trường hợp productID không hợp lệ
             System.err.println("Lỗi: productID không hợp lệ!");
         }
     }
-    }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
+    }
 
     private void textSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSearchActionPerformed
         // TODO add your handling code here:
@@ -932,11 +987,12 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
      
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Home home = new Home();
-                home.setLocationRelativeTo(null);
+                home = new Home();
+                home.setLocationRelativeTo(null); //hiển thị ứng dụng giữa màn hình
                 home.setVisible(true);
+                showLoadingDialog();
                 home.sendDataTable();
- 
+                loadingDialog.dispose();
             }
         });
     }

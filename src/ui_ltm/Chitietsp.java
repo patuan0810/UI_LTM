@@ -32,7 +32,7 @@ public class Chitietsp extends javax.swing.JFrame {
     private String selectedProductImageURL;
     private String selectedProductID;
     private String reviewData;
-
+    private boolean frameDisplayed = false;
 
     /**
      * Creates new form Chitietsp
@@ -52,6 +52,8 @@ public class Chitietsp extends javax.swing.JFrame {
         // Thêm ChartPanel vào jPanel4
         bieuDoPanel.setLayout(new BorderLayout());
         bieuDoPanel.add(chartPanel, BorderLayout.CENTER);
+        
+        
     }
 
    
@@ -567,7 +569,7 @@ public class Chitietsp extends javax.swing.JFrame {
     
     private String getReviewInformation_1(String productID) {
     try {
-        System.out.println("1 " + productID);
+//        System.out.println("1 " + productID);
         String productin4 = "https://tiki.vn/api/v2/products/" + productID;
 
             Document doc = Jsoup.connect(productin4)
@@ -603,7 +605,7 @@ public class Chitietsp extends javax.swing.JFrame {
 
         // Kiểm tra nếu không có đánh giá
         if (reviews.length() == 0) {
-            System.out.println("Không có đánh giá.");
+//            System.out.println("Không có đánh giá.");
             return "Không có đánh giá.";
         }
 
@@ -620,11 +622,11 @@ public class Chitietsp extends javax.swing.JFrame {
 
         // Kiểm tra nếu không có đánh giá có nội dung
         if (reviewInfo.length() == 0) {
-            System.out.println("Không có đánh giá có nội dung.");
+//            System.out.println("Không có đánh giá có nội dung.");
             return "Không có đánh giá có nội dung.";
         }
 
-        System.out.println(reviewInfo);
+//        System.out.println(reviewInfo);
         return reviewInfo.toString();
     } catch (IOException e) {
         e.printStackTrace();
