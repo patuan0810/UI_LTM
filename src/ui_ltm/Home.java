@@ -716,7 +716,7 @@ public class Home extends javax.swing.JFrame {
         label.setBorder(border);
         loadingDialog.add(label);
         loadingDialog.setSize(180, 90);
-        loadingDialog.setLocationRelativeTo(null);
+        loadingDialog.setLocationRelativeTo(home);
         loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         loadingDialog.setUndecorated(true);
         loadingDialog.setVisible(true);
@@ -725,39 +725,7 @@ public class Home extends javax.swing.JFrame {
         loadingDialog.dispose();
     }
 
-    private void showChiTietSP() {
-    int tabIndex = listSanPham.getSelectedIndex();
-    Component tabComponent = listSanPham.getComponentAt(tabIndex);
-    JScrollPane scrollPane = (JScrollPane) tabComponent;
-    JViewport viewport = scrollPane.getViewport();
-    JTable table = (JTable) viewport.getView();
-    int selectedRow = table.getSelectedRow();
 
-    if (selectedRow >= 0) {
-        int stt = (int) table.getValueAt(selectedRow, 0);
-        String tableName = table.getName();
-
-        String productID = getProductID(tableName, stt);
-
-        // Thêm log để kiểm tra giá trị của productID
-//        System.out.println("Product ID: " + productID);
-
-        // Thêm kiểm tra trước khi mở Chitietsp
-        if (productID != null && !productID.isEmpty()) {
-            Chitietsp chitietsp = new Chitietsp(getListPrice(productID), productID);
-            chitietsp.setSelectedProductName((String) table.getValueAt(selectedRow, 1));
-            chitietsp.setSelectedProductPrice(getLastestPrice(productID));
-            chitietsp.setSelectedProductImageURL(getImageURL(tableName, stt));
-            chitietsp.setLocationRelativeTo(null);
-            chitietsp.setVisible(true);
-             
-
-        } else {
-            // Xử lý trường hợp productID không hợp lệ
-            System.err.println("Lỗi: productID không hợp lệ!");
-        }
-    }
-    }
 
     private void textSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSearchActionPerformed
         // TODO add your handling code here:
@@ -1027,9 +995,8 @@ public static void populateTable(DefaultTableModel tableModel, String jsonData) 
                 home = new Home();
                 home.setLocationRelativeTo(null); //hiển thị ứng dụng giữa màn hình
                 home.setVisible(true);
-                showLoadingDialog();
                 home.sendDataTable();
-                loadingDialog.dispose();
+
             }
         });
     }

@@ -592,7 +592,7 @@ public class Chitietsp extends javax.swing.JFrame {
     
     private String getReviewInformation(String productID) {
     try {
-        System.out.println(productID);
+//        System.out.println(productID);
         String reviewUrl = "https://tiki.vn/api/v2/reviews?product_id=" + productID;
         Document reviewDoc = Jsoup.connect(reviewUrl)
                 .method(Connection.Method.GET)
