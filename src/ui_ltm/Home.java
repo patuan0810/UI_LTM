@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
@@ -58,8 +59,26 @@ public class Home extends javax.swing.JFrame {
    
     public Home() {
         initComponents();
+        centerAlignSttColumn();
     }
-
+    class CenterRenderer extends DefaultTableCellRenderer {
+        public CenterRenderer() {
+            setHorizontalAlignment(JLabel.CENTER);
+        }
+    }
+              
+    private void centerAlignSttColumn() {
+        DefaultTableCellRenderer centerRenderer = new CenterRenderer();
+        allTable1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        nhaSachTikiTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        mayAnhTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        laptopMayViTinhLinhKienTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        dongHoVaTrangSucTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        baloVaValiTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tuiThoiTrangNamTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        giayDepNamTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        nhaCuaDoiSongTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,6 +151,8 @@ public class Home extends javax.swing.JFrame {
         Searchbtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         Searchbtn.setForeground(new java.awt.Color(255, 255, 255));
         Searchbtn.setText("Tìm kiếm");
+        Searchbtn.setMaximumSize(new java.awt.Dimension(64, 22));
+        Searchbtn.setMinimumSize(new java.awt.Dimension(64, 22));
         Searchbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchbtnActionPerformed(evt);
@@ -149,16 +170,14 @@ public class Home extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(textSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Searchbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(textSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 1153, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(Searchbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(Searchbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(textSearch)
+            .addComponent(Searchbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(51, 102, 255));
@@ -196,7 +215,7 @@ public class Home extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -208,11 +227,14 @@ public class Home extends javax.swing.JFrame {
             }
         });
         allTable1.setName("all"); // NOI18N
+        allTable1.setVerifyInputWhenFocusTarget(false);
         AllScrollPane.setViewportView(allTable1);
         if (allTable1.getColumnModel().getColumnCount() > 0) {
-            allTable1.getColumnModel().getColumn(0).setMinWidth(40);
+            allTable1.getColumnModel().getColumn(0).setMinWidth(20);
             allTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
             allTable1.getColumnModel().getColumn(0).setMaxWidth(100);
+            allTable1.getColumnModel().getColumn(0).setCellRenderer(null);
+            allTable1.getColumnModel().getColumn(1).setResizable(false);
         }
 
         listSanPham.addTab("Tất cả", AllScrollPane);
@@ -536,11 +558,10 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(listSanPham)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
