@@ -25,6 +25,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
@@ -652,22 +653,58 @@ public class Home extends javax.swing.JFrame {
 
 
     private void theoDoiGiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theoDoiGiaButtonActionPerformed
-                home.setEnabled(false);
-                showLoadingDialog(); 
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        showChiTietSP();
-                        return null;
-                    }
+                
+                
+                int tabIndex = listSanPham.getSelectedIndex();
+                Component tabComponent = listSanPham.getComponentAt(tabIndex);
+                JScrollPane scrollPane = (JScrollPane) tabComponent;
+                JViewport viewport = scrollPane.getViewport();
+                JTable table = (JTable) viewport.getView();
+                int selectedRow = table.getSelectedRow();
 
-                    @Override
-                    protected void done() {
-                        closeLoadingDialog();
-                        home.setEnabled(true);   
+                if (selectedRow >= 0) {
+                    int stt = (int) table.getValueAt(selectedRow, 0);
+                    String tableName = table.getName();
+
+                    String productID = getProductID(tableName, stt);
+
+                    // Thêm log để kiểm tra giá trị của productID
+            //        System.out.println("Product ID: " + productID);
+
+                    // Thêm kiểm tra trước khi mở Chitietsp
+                    if (productID != null && !productID.isEmpty()) {
+                        home.setEnabled(false);
+                        showLoadingDialog(); 
+                        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                Chitietsp chitietsp = new Chitietsp(getListPrice(productID), productID);
+                                chitietsp.setSelectedProductName((String) table.getValueAt(selectedRow, 1));
+                                chitietsp.setSelectedProductPrice(getLastestPrice(productID));
+                                chitietsp.setSelectedProductImageURL(getImageURL(tableName, stt));
+                                chitietsp.setLocationRelativeTo(null);
+                                chitietsp.setVisible(true);
+                                return null;
+                            }
+
+                            @Override
+                            protected void done() {
+                                closeLoadingDialog();
+                                home.setEnabled(true);   
+                            }
+                        };
+                        worker.execute();
+
+                    } else {
+                        // Xử lý trường hợp productID không hợp lệ
+                        System.err.println("Lỗi: productID không hợp lệ!");
                     }
-                };
-                worker.execute();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xin vui lòng chọn sản phẩm!");
+                    
+                }
+        
+                
     
     }//GEN-LAST:event_theoDoiGiaButtonActionPerformed
 
@@ -689,7 +726,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void showChiTietSP() {
-        int tabIndex = listSanPham.getSelectedIndex();
+    int tabIndex = listSanPham.getSelectedIndex();
     Component tabComponent = listSanPham.getComponentAt(tabIndex);
     JScrollPane scrollPane = (JScrollPane) tabComponent;
     JViewport viewport = scrollPane.getViewport();
